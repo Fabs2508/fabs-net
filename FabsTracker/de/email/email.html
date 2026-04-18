@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/email.css">
+    <title>FabsTracker | Pin Bestätigung</title>
+</head>
+<body>
+    <div class="email-box">
+        <h1>Pin Bestätigung</h1>
+        <p>Ein Bestätigungscode wurde an deine E-Mail-Adresse gesendet. Bitte gib den Code unten ein, um fortzufahren.</p>
+
+        <input type="number" id="pin" placeholder="Gib deinen Bestätigungscode ein">
+
+        <h3 class="msg"></h3>
+
+        <button class="btn" onclick="verifyPin()">Bestätigen</button>
+    </div>
+    <script src="email.js"></script>
+</body>
+</html>

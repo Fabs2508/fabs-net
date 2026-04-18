@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/FabsNet_Logo_white.png"image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <title>FabsNetwork</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <img href="/de/index.html" src="img/FabsNet_Logo.png" alt="Logo" class="logo">
+
+            <nav id="nav">test</nav>
+        </div>
+    </header>
+
+    <div class="bg shape1"></div>
+    <div class="bg shape2"></div>
+
+    <div class="main-box">
+        <h1>Willkommen bei Fabs Network</h1>
+        <h3>Wohin möchtest du?</h3>
+
+        <button id="btnFabs">Fabs</button>
+
+        <button id="btnFabsTracker" title="Eine Fitness App">
+            FabsTracker
+            <img src="/FabsTracker/img/FabsTracker_Logo.ico">
+        </button>
+
+        <h3>Mehr Apps Folgen...</h3>
+    </div>
+    <script>
+        const FabsTracker = document.getElementById("btnFabsTracker");
+        const Fabs = document.getElementById("btnFabs");
+
+        FabsTracker.addEventListener('click', () => {
+            window.location.href = '/FabsTracker/de';
+        });
+
+        Fabs.addEventListener('click', () => {
+            window.location.href = '/Fabs';
+        });
+    </script>
+</body>
+</html>

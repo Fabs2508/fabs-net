@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top left, rgba(43,188,255,0.2), transparent),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.1), transparent),
+    linear-gradient(135deg, #0a0a0a, #111);
+  color: white;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 30px;
+  z-index: 10;
+}
+
+.header-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+#nav {
+  display: flex;
+  gap: 15px;
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+#nav a {
+  text-decoration: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: 0.2s ease;
+}
+
+#nav a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+.shape1 {
+  width: 250px;
+  height: 250px;
+  background: rgba(43,188,255,0.2);
+  top: 10%;
+  left: 10%;
+}
+
+.shape2 {
+  width: 300px;
+  height: 300px;
+  background: rgba(255,255,255,0.08);
+  bottom: 10%;
+  right: 10%;
+}
+
+.main-box {
+  position: relative;
+  z-index: 1;
+  width: 360px;
+  padding: 35px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.main-box h1 {
+  margin-bottom: 15px;
+}
+
+.main-box h3 {
+  margin-bottom: 10px;
+}
+
+#message {
+  margin-bottom: 15px;
+  min-height: 20px;
+  font-weight: 600;
+}
+
+button {
+  width: 100%;
+  max-width: 250px;
+  padding: 12px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  
+  border-radius: 12px;
+  border: none;
+  background: #2bbcff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;     /* Zentriert Text und Bild vertikal auf einer Linie */
+  justify-content: center; /* Zentriert den Inhalt horizontal */
+  gap: 20px;               /* Erzeugt einen sauberen Abstand zwischen Text und Logo */
+  font-size: 16px;         /* Hier kannst du die Textgröße direkt steuern */
+}
+
+#btnFabs {
+  position: relative;
+  padding: 15px;
+  border: 3px solid transparent;
+  border-radius: 15px;
+
+  /* Erster Gradient ist jetzt die Mitte (animiert), zweiter der Rahmen (statisch) */
+  background-image: linear-gradient(to right, red, blue, red), 
+                    linear-gradient(to bottom right, red, blue);
+  
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+  
+  /* Die Mitte (erster Wert) machen wir 200% breit für die Bewegung */
+  background-size: 200% 100%, 100% 100%;
+  
+  animation: moveCenter 3s linear infinite;
+}
+
+#btnFabs:hover {
+    background-image: linear-gradient(to right, #ff3c3c, #3c3cff, #ff3c3c), 
+                      linear-gradient(to bottom right, #a6ff00, #00fff2);
+}
+
+@keyframes moveCenter {
+  0% { background-position: 0% 0%, 0% 0%; }
+  100% { background-position: 200% 0%, 0% 0%; }
+}
+button img{
+  width: 65px;
+  height: auto;
+}
+
+button:hover {
+  background: #54cfff;
+}
+.extra {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+  color: #bdbdbd;
+}

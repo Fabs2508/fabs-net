@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FabsNet | 404</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            background-color: black;
+            color: #b1b1b1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: green;
+            font-size: 80px;
+            margin-top: 120px;
+        }
+
+        .errortext {
+            display: flex;
+            justify-content: center; /* Zentriert die h2 horizontal */
+            gap: 1ch;
+            width: 100%;            /* Nimmt die volle Breite ein */
+        }
+        h2 {
+            margin: 0;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>404 :(</h1>
+
+    <div class="errortext">
+        <h2>Der Pfad</h2>
+        <h2 id="url"></h2>
+    </div>
+
+    <a id="back">Zurück</a>
+
+    <script>
+        const path = document.location.pathname;
+        const urltext = document.getElementById('url');
+        const back = document.getElementById('back');
+
+        urltext.innerHTML = `${path} existiert nicht.`;
+
+        back.addEventListener('click', (event) => {
+            event.preventDefault();
+            window.history.back();
+        })
+    </script>
+</body>
+</html>
