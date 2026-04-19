@@ -11,7 +11,9 @@ FabsTracker/de{
 }
 
 
-
+Lucidchart {
+    Link: https://lucid.app/lucidchart/a6307b7b-4e47-43a3-9427-3b56813064e3/edit?invitationId=inv_c99a0f59-f483-450a-a47b-03174d6421c1
+}
 
 
 :CHATGPT:

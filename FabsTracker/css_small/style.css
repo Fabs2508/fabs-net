@@ -1,0 +1,135 @@
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background:
+    radial-gradient(circle at top left, rgba(43, 188, 255, 0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 30%),
+    linear-gradient(135deg, #0a0a0a, #111111 45%, #0d0d0d);
+}
+
+.welcome {
+  text-align: center;
+  width: auto;
+  margin: 40px auto 0;
+  padding: 30px;
+  max-width: 700px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.login,
+.signup {
+  width: 14%;
+  min-width: 150px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(43, 188, 255, 0.85);
+  color: black;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-shadow: 0 8px 20px rgba(43, 188, 255, 0.18);
+}
+
+.login:hover,
+.signup:hover {
+  background: rgba(84, 207, 255, 1);
+  transform: translateY(-2px);
+}
+
+.whatisthat {
+  display: none;
+}
+
+.whatisthat.active {
+  display: block;
+}
+
+nav {
+  margin-bottom: 30px;
+  padding: 14px 20px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: left;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+nav ul li a:hover {
+  color: white;
+  background: rgba(43, 188, 255, 0.16);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background: rgba(20, 20, 20, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 10px 0;
+  display: none;
+  min-width: 170px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.dropdown-menu li {
+  padding: 4px 10px;
+}
+
+.dropdown-menu li a {
+  color: white;
+  display: block;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.dropdown-menu li a:hover {
+  background: rgba(43, 188, 255, 0.22);
+  color: white;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
