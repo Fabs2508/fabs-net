@@ -1,5 +1,19 @@
                                 **Notes**
 
+github {
+    Dateien auf github aktualisieren:
+        git add .         ("." ALLE geänderten Dateien)
+        git commit -m "Hier deine Nachricht einfügen"
+
+        git push origin main
+        Wenn error dann:
+            git pull origin main --rebase
+        Nochmal:
+            git push origin main
+
+
+}
+
 FabsTracker/de {
 
     /home{
