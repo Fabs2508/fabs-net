@@ -1,3 +1,9 @@
+const signupBtn = document.querySelector('.btn');
+
+signupBtn.addEventListener('click', () => {
+  register();
+});
+
 function msg1(msg, duration, color) {
   document.querySelector('.msg').innerHTML =  msg;
   document.querySelector('.msg').style.display = 'block';
@@ -41,13 +47,13 @@ function register() {
   
   //Prüfen
   if(username === '' || email === '' || password === '' || passwordConfirm === '') {
-    msg1('Bitte füllen Sie alle Felder aus!', 1500, 'red');
+    msg1('Bitte fülle alle Felder aus!', 1500, 'red');
     return;
   } else if (username.length < 3 || username.length > 20) {
     msg1('Der Benutzername muss zwischen 3 und 20 Zeichen lang sein!', 2500, 'red');
     return;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    msg1('Bitte geben Sie eine gültige E-Mail-Adresse ein!', 1500, 'red');
+    msg1('Bitte gebe eine gültige E-Mail-Adresse ein!', 1500, 'red');
     return;
   } else if (password !== passwordConfirm) {
     msg1('Die Passwörter stimmen nicht überein!', 1500, 'red');

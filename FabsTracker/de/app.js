@@ -1,6 +1,8 @@
 const login = document.querySelector('.login');
 const signup = document.querySelector('.signup');
 
+const messageText = document.getElementById('message');
+
 const body = document.querySelector('.body');
 
 login.addEventListener('click', () => {
@@ -17,11 +19,12 @@ async function checkLogin() {
     });
 
     if (res.status === 401) { // nicht eingeloggt
+      messageText.textContent = '';
       return;
     }
 
     if (!res.ok) {
-      welcomeText.textContent = 'Fehler beim Laden';
+      messageText.textContent = 'Fehler beim Laden';
       return;
     }
 
@@ -35,11 +38,12 @@ async function checkLogin() {
     const user = data.user.username;
 
     window.location.href = 'home/home.html';
+    messageText.textContent = 'Weiterleitung...F';
     body.style.display = "none";
 
   } catch (err) {
     console.error(err);
-    //welcomeText.textContent = 'Netzwerkfehler';
+    //messageText.textContent = 'Netzwerkfehler';
   }
 }
 

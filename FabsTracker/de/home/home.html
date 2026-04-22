@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../../img/FabsTracker_Logo.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../../css/home.css">
+  <link rel="stylesheet" href="../../css/home.css" media="screen and (min-width: 801px)">
+  <link rel="stylesheet" href="../../css_small/home.css" media="screen and (max-width: 800px)">
   <title>FabsTracker | Home</title>
   <script defer src="home.js"></script>
 </head>
@@ -13,23 +14,25 @@
   <div class="header-inner">
     <img src="../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
 
-    <nav id="nav"></nav>
-
     <button id="logoutBtn">Logout</button>
   </div>
 </header>
 
   <div class="background-shape shape1"></div>
   <div class="background-shape shape2"></div>
-  
-  <div class="home-box">
+
+  <div class="home-box" style="height: 2000px;">
     <h1>FabsTracker</h1>
 
-    <div id="message"></div>
-    
-    <p id="welcome">Lade...</p>
+    <h2 id="welcome">Lade...</h2>
 
-    <div id="actions"></div>
+    <div id="message">dd</div>
   </div>
+  <nav class="bottom-nav">
+    <button data-tab="home" class="active">🏠<span>Home</span></button>
+    <button data-tab="analytics">📊<span>Tracks</span></button>
+    <button data-tab="contracts">📄<span>Fortschritte</span></button>
+    <button data-tab="settings" disabled>⚙️<span>Irgendwas</span></button>
+  </nav>
 </body>
 </html>

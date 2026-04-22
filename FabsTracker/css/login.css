@@ -125,6 +125,16 @@ input:focus {
   box-shadow: 0 0 0 2px #2bbcff;
 }
 
+label {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.cf-turnstile {
+  display: flex;
+  margin-bottom: 15px;
+}
+
 button {
   width: 100%;
   max-width: 250px;

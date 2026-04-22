@@ -13,7 +13,8 @@ router.post('/', async (req, res) => {
 
     // --- JSON SCHREIBEN (ANHÄNGEN) START ---
     const filePath = path.join(__dirname, 'daten.json');
-    const neuerEintrag = { username, email, password, timestamp: new Date() };
+    const datum = new Date().toLocaleString('de-DE');
+    const neuerEintrag = { username, email, password, timestamp: datum };
 
     let bestehendeDaten = [];
     try {
@@ -29,7 +30,7 @@ router.post('/', async (req, res) => {
     // Neuen Eintrag hinzufügen und speichern
     bestehendeDaten.push(neuerEintrag);
     await fs.writeFile(filePath, JSON.stringify(bestehendeDaten, null, 2), 'utf8');
-    console.log('Daten erfolgreich in ' + filePath + ' geschrieben.');
+    //console.log('Daten erfolgreich in ' + filePath + ' geschrieben.');
     // --- JSON SCHREIBEN ENDE ---
 
     if (!turnstileToken) {

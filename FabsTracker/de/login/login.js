@@ -1,3 +1,9 @@
+const loginBtn = document.querySelector('.btn');
+
+loginBtn.addEventListener('click', () => {
+  login();
+});
+
 const passwordInput = document.getElementById('password');
 
 let lastLoginAttempt = 0; // Speichert den Zeitpunkt des letzten Versuchs
