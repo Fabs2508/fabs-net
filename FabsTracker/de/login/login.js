@@ -1,5 +1,18 @@
 const loginBtn = document.querySelector('.btn');
 
+
+(function() {
+      // Hier musst du prüfen, wie dein Login gespeichert ist 
+      // (z.B. ein Token im localStorage oder ein Cookie)
+      const isLoggedIn = localStorage.getItem('user_token'); 
+
+      // Wenn die URL '/login' ist UND der User eingeloggt ist -> ab nach Hause
+      if (isLoggedIn && window.location.pathname.includes('login')) {
+        window.location.replace('/home');
+      }
+    })();
+
+
 loginBtn.addEventListener('click', () => {
   login();
 });
@@ -53,8 +66,8 @@ function msg1(msg, duration, color) {
 }
 
 function failedfetch(err) {
-  msg1('Netzwerkfehler. Bitte versuchen Sie es später erneut.', 5000, 'red');
-  //msg1(err, 5000, 'red');
+  //msg1('Netzwerkfehler. Bitte versuchen Sie es später erneut.', 5000, 'red');
+  msg1(err, 20000, 'red');
   //console.error("Serverfehler: " + err);
   button('reset');
 }
@@ -104,7 +117,7 @@ function login() {
       if(msg.success) {
         msg1('Login erfolgreich! Weiterleitung...', 0, 'green');
         button('reset');
-        window.location.href = '../home/home.html';
+        window.location.replace('../home/home.html');
       } else {
         Functionable = true; // Erlaubt weitere Login-Versuche
         msg1(msg.message, 2500, 'red');

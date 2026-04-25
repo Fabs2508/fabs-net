@@ -2,8 +2,6 @@ const welcomeText = document.getElementById('welcome');
 const actionsDiv = document.getElementById('actions');
 const logoutBtn = document.getElementById('logoutBtn');
 
-const bottomNav = document.querySelector('.bottom-nav');
-
 const messageDiv = document.getElementById('message');
 
 function showMessage(text, color = 'red') {
@@ -23,37 +21,20 @@ BottomNav.addEventListener("click", (e) => {
   if (!button) return;
 
   const tabId = button.dataset.tab;
-
-  // 🔹 Buttons aktualisieren
-  NavButtons.forEach(btn => btn.classList.remove("active"));
-  button.classList.add("active");
-
-  // 🔹 Tabs anzeigen/verstecken
-  tabs.forEach(tab => {
-    tab.classList.remove("active");
-    if (tab.id === tabId) {
-      tab.classList.add("active");
-    }
-  });
+  
 });
 
 NavButtons.forEach(button => {
   button.addEventListener("click", () => {
-    
-    // active reset
-    NavButtons.forEach(btn => btn.classList.remove("active"));
-    button.classList.add("active");
 
     const tab = button.dataset.tab;
 
-    if (tab === "home") {
-      content.innerHTML = "<h1>Home</h1>";
-    } else if (tab === "analytics") {
-      content.innerHTML = "<h1>Analyse</h1>";
+    if (tab === "trainingsplan") {
+      window.location.replace('./trainingsplan/');
     } else if (tab === "contracts") {
-      content.innerHTML = "<h1>Verträge</h1>";
+      window.location.replace('./contracts/');
     } else if (tab === "settings") {
-      content.innerHTML = "<h1>Einstellungen</h1>";
+      window.location.replace('./settings/');
     }
 
   });
@@ -85,9 +66,10 @@ async function checkLogin() {
     }
 
     const user = data.user.username;
+    const userFormatted = user.charAt(0).toUpperCase() + user.slice(1);
 
      if (!linksSet) {
-      welcomeText.textContent = `Wilkommen zurück ${user}`;
+      welcomeText.textContent = `Wilkommen zurück ${userFormatted}`;
 
 
 

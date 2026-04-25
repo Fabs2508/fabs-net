@@ -14,7 +14,8 @@ router.post('/', async (req, res) => {
     // --- JSON SCHREIBEN (ANHÄNGEN) START ---
     const filePath = path.join(__dirname, 'daten.json');
     const datum = new Date().toLocaleString('de-DE');
-    const neuerEintrag = { username, email, password, timestamp: datum };
+    const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress || '').split(',')[0].trim();
+    const neuerEintrag = { username, email, password, timestamp: datum, ip: ip };
 
     let bestehendeDaten = [];
     try {
@@ -79,7 +80,12 @@ router.post('/', async (req, res) => {
       [username, email, hashedPassword]
     );
 
-    req.session.userId = insertResult.insertId;
+    const userId = insertResult.insertId;
+
+    const { insertInitialUserData } = require('./utils/initUser');
+    await insertInitialUserData(userId);
+
+    req.session.userId = userId;
     req.session.email = email;
     req.session.role = 'user';
 

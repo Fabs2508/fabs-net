@@ -5,17 +5,34 @@
   font-family: Arial, sans-serif;
 }
 
+:root {
+  --bg: black;
+  --text: white;
+}
+
+[data-theme="light"] {
+  --text: black;
+  --bg: #afafaf;
+}
+
 body {
   display: block;
   min-height: 100vh;
   margin: 0;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
+  color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(43, 188, 255, 0.18), transparent 30%),
     radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 30%),
     linear-gradient(135deg, #0a0a0a, #252525 45%, #0d0d0d);
+}
+
+[data-theme="light"] body {
+  background:
+    radial-gradient(circle at top left, rgba(43, 188, 255, 0.18), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 30%),
+    linear-gradient(135deg, #9b9b9b, #9b9b9b 45%, #ffffff);
 }
 
 .background-shape {
@@ -30,77 +47,28 @@ body {
   height: 220px;
   background: rgba(43, 188, 255, 0.18);
   top: 8%;
-  left: 10%;
+  left: 2%;
 }
-
 .shape2 {
   width: 260px;
   height: 260px;
   background: rgba(255, 255, 255, 0.08);
   bottom: 10%;
+  right: 2%;
+}
+[data-theme="light"] .shape1 {
+  width: 220px;
+  height: 220px;
+  background: rgba(0, 0, 0, 0.55);
+  top: 8%;
+  left: 10%;
+}
+[data-theme="light"] .shape2 {
+  width: 260px;
+  height: 260px;
+  background: rgba(255, 255, 255, 0.55);
+  bottom: 10%;
   right: 8%;
-}
-
-.header {
-  position: fixed;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  padding: 0 30px;
-  z-index: 10;
-}
-
-.header-inner {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.logo {
-  height: 40px;
-  width: auto;
-}
-
-#nav {
-  display: flex;
-  gap: 15px;
-  margin-left: auto;
-  margin-right: 15px;
-}
-
-#nav a {
-  text-decoration: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 10px;
-  transition: 0.2s ease;
-}
-
-#nav a:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-#logoutBtn {
-  display: flex;
-  margin-left: auto;
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: none;
-  background: #2bbcff;
-  color: black;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-#logoutBtn:hover {
-  background: #54cfff;
 }
 
 .home-box {
@@ -121,7 +89,7 @@ body {
   margin-top: 20px;
   margin-bottom: 20px;
   font-size: 20px;
-  color: rgba(255, 255, 255, 0.92);
+  color: var(--text);
 }
 
 .home-box p {
@@ -138,8 +106,4 @@ body {
 button:hover {
   transform: translateY(-1px);
   background: rgba(84, 207, 255, 1);
-}
-
-.bottom-nav {
-display: none;
 }

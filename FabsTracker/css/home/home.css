@@ -6,8 +6,8 @@
 }
 
 :root {
-  --bg: black;
   --text: white;
+  --bg: black;
 }
 
 [data-theme="light"] {
@@ -47,15 +47,17 @@ body {
   height: 220px;
   background: rgba(43, 188, 255, 0.18);
   top: 8%;
-  left: 2%;
+  left: 10%;
 }
+
 .shape2 {
   width: 260px;
   height: 260px;
   background: rgba(255, 255, 255, 0.08);
   bottom: 10%;
-  right: 2%;
+  right: 8%;
 }
+
 [data-theme="light"] .shape1 {
   width: 220px;
   height: 220px;
@@ -69,68 +71,6 @@ body {
   background: rgba(255, 255, 255, 0.55);
   bottom: 10%;
   right: 8%;
-}
-
-.header {
-  position: fixed;
-  top: 20px;
-  left: 0;
-  width: 100%;
-  padding: 0 30px;
-  z-index: 10;
-}
-
-.header-inner {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-}
-
-.logo {
-  height: 40px;
-  width: auto;
-}
-
-#nav {
-  display: flex;
-  gap: 15px;
-  margin-left: auto;
-  margin-right: 15px;
-}
-
-#nav a {
-  text-decoration: none;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 10px;
-  transition: 0.2s ease;
-}
-
-#nav a:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-#logoutBtn {
-  display: flex;
-  margin-left: auto;
-  padding: 10px 16px;
-  border-radius: 12px;
-  border: none;
-  background: #2bbcff;
-  color: black;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-#logoutBtn:hover {
-  background: #54cfff;
 }
 
 .home-box {
@@ -165,58 +105,6 @@ body {
   font-weight: 600;
 }
 
-button:hover {
-  transform: translateY(-1px);
-  background: rgba(84, 207, 255, 1);
-}
-
-
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  align-items: center;
-  background-color: var(--bg)
-}
-
-[data-theme="light"] .bottom-nav {
-
-  border-top: 10px solid #000000;
-}
-
-.bottom-nav button {
-  background: none;
-  border: none;
-  font-size: 18px;
-  width: 80px;
-  height: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--text);
-}
-
-.bottom-nav button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-
-  transform: none;
-}
-
-.bottom-nav button.active {
-  background: rgba(168, 168, 168, 0.25);
-  border-radius: 10px;
-  color: var(--text);
-
-  transform: none;
-}
-
-.bottom-nav span {
-  font-size: 12px;
+display: none;
 }

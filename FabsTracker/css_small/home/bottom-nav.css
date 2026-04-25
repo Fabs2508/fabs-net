@@ -1,0 +1,88 @@
+:root {
+  --text: white;
+  --bg: black;
+  --active-bg: rgba(168, 168, 168, 0.15);
+  --rgba: rgba(255, 255, 255, 0.25);
+}
+
+[data-theme="light"] {
+  --text: black;
+  --bg: #afafaf;
+  --active-bg: rgba(110, 110, 110, 0.50);
+  --rgba: rgba(130, 130, 130, 0.5);
+}
+
+.bottom-nav {
+  /* Fixiert am Boden mit Berücksichtigung von modernen Smartphone-Displays */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  padding-bottom: env(safe-area-inset-bottom); /* Wichtig für iPhones (Home-Bar) */
+  
+  display: flex;
+  justify-content: space-around; /* Verteilung oft besser als gap + center */
+  align-items: center;
+
+  border-radius: 16px;
+  
+  background-color: var(--bg);
+  z-index: 1000; /* Sicherstellen, dass sie oben liegt */
+}
+
+/* Theme-spezifische Anpassung mit modernerer Optik */
+[data-theme="light"] .bottom-nav {
+  border-top: 1px solid rgba(0, 0, 0, 0.1); /* 10px wirkt oft sehr klobig */
+  background-color: var(--rgba);
+}
+
+.bottom-nav button {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  max-width: 80px;
+  height: 100%;
+  color: var(--text);
+  cursor: pointer;
+  position: relative; /* WICHTIG: Damit das ::before sich an diesem Button ausrichtet */
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  /* Transition nur für Farben/Skalierung, nicht für das Hintergrund-Quadrat hier */
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.bottom-nav button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.bottom-nav button.active::before {
+  content: "";
+  position: absolute;
+  /* 70px Höhe - 2px oben - 2px unten = 66px */
+  height: 60px; 
+  width: 90%; /* Passt sich der Buttonbreite an */
+  max-width: 80px;
+  
+  background: var(--active-bg);
+  border-radius: 12px;
+  
+  /* Perfekte Zentrierung sorgt für die 2px Rand oben und unten */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.bottom-nav button.active {
+  font-weight: bold;
+}
+
+.bottom-nav span {
+  font-size: 11px;
+  margin-top: 4px;
+}

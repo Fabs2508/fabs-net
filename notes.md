@@ -39,3 +39,14 @@ Lucidchart {
 
 :CHATGPT:
 Hallo ich programmiere gerade eine Gymapp(FabsTracker) mit html css und js(und Node.js + auch express Cookies) im Glassmorphism Style mit einer eigenen Domain(fabs-net.com, mit Cloudflare) über einen Raspberry pi 4 Model B Tunnel(und MySQL als Datenbank). Ich habe jetzt schon Anmelden(login), Registrieren(signup) und eine Startseite.
+
+FabsTracker Codes:
+    Benutzer updaten: node FabsTracker/routes/utils/updateUser.js
+
+
+MySQL:
+    Backup: mysqldump -u root -p gymapp > backup/MySQL/backup.sql
+
+NOCH MACHEN:
+    Backend, Route z.B. /home für das auslesen und umschreiben der "userInfo" Spalte.
+    Und spalte "theme" in JS einbauen, ist bereits in MySQL.

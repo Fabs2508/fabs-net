@@ -16,6 +16,7 @@ const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const adminRoutes = require('./routes/admin/index');
 const meRoutes = require('./routes/me');
+const homeRoutes = require('./routes/home/index');
 
 const testRoutes = require('./routes/test');
 const pingRoutes = require('./routes/ping');
@@ -51,6 +52,7 @@ app.use("/register", registerRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/admin", adminRoutes);
 app.use("/me", meRoutes);
+app.use("/home", homeRoutes);
 
 app.use("/test", testRoutes);
 app.use("/ping", pingRoutes);
