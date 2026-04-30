@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../../img/FabsTracker_Logo.ico" type="image/x-icon">
-    <link rel="stylesheet" href="../../../css/home/trainingsplan.css" media="screen and (min-width: 801px)">
-    <link rel="stylesheet" href="../../../css_small/home/trainingsplan.css" media="screen and (max-width: 800px)">
-    <link rel="stylesheet" href="../../../css_small/home/bottom-nav.css" media="screen and (max-width: 800px)">
+
+    <link rel="stylesheet" href="../../../css/home/trainingsplan.css" media="screen and (min-width: 901px)">
+    <link rel="stylesheet" href="../../../css/home/header.css" media="screen and (min-width: 901px)">
+    <link rel="stylesheet" href="../../../css/home/sidebar.css" media="screen and (min-width: 901px)">
+    
+    <link rel="stylesheet" href="../../../css_small/home/trainingsplan.css" media="screen and (max-width: 900px)">
+    <link rel="stylesheet" href="../../../css_small/home/header.css" media="screen and (max-width: 900px)">
+    <link rel="stylesheet" href="../../../css_small/home/bottom-nav.css" media="screen and (max-width: 900px)">
     <title>FabsTracker | Trainingsplan</title>
 </head>
 <body>
@@ -14,19 +19,55 @@
     <div class="header-inner">
       <img src="../../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
 
-      <button id="logoutBtn">Logout</button>
+      <h3 id="h3username">username</h3>
+
+      <div class="profile-wrapper">
+        <div class="profile-icon" id="profileBtn">
+          <img src="../../../img/standart_user.png" alt="profile">
+        </div>
+
+        <div class="dropdown" id="profileDropdown">
+          <a href="/FabsTracker/de/home/settings/index.html">Einstellungen</a>
+
+          <div class="dropdown-item switch-row">
+            <span>Theme</span>
+
+            <label class="switch">
+              <input type="checkbox" id="themeSwitch">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <button id="logoutBtn">Logout</button>
+        </div>
+      </div>
     </div>
   </header>
 
+  <nav class="sidebar">
+    <button data-tab="home">🏠&nbsp<span>Home</span></button>
+    <button data-tab="foodtracker" disabled>🍴&nbsp<span>FoodTracker</span></button>
+    <button data-tab="trainingsplan" class="active">📄&nbsp<span>Trainingsplan</span></button>
+    <button data-tab="contracts" disabled>📄&nbsp<span>Fortschritte</span></button>
+    <span class="label">Mehr</span>
+    <button data-tab="griptrainer" disabled>💪&nbsp<span>Griptrainer</span></button>
+  </nav>
 
-    <nav class="bottom-nav">
-      <button data-tab="home">🏠<span>Home</span></button>
-      <button data-tab="analytics" disabled>📊<span>Tracks</span></button>
-      <button data-tab="trainingsplan" class="active">📄<span>Trainingsplan</span></button>
-      <button data-tab="contracts" disabled>📄<span>Fortschritte</span></button>
-      <button data-tab="more" disabled>➕<span>Irgendwas</span></button>
-    </nav>
+  <div class="trainingsplan-box" style="height: 2000px;">
+    <h1>Trainingsplan</h1>
+  </div>
 
-    <script src="trainingsplan.js"></script>
+  <nav class="bottom-nav">
+    <button data-tab="home">🏠<span>Home</span></button>
+    <button data-tab="analytics" disabled>🍴<span>FoodTracker</span></button>
+    <button data-tab="trainingsplan" class="active">📄<span>Trainingsplan</span></button>
+    <button data-tab="contracts" disabled>📄<span>Fortschritte</span></button>
+    <button data-tab="more">➕<span>Mehr</span></button>
+  </nav>
+
+  <script src="trainingsplan.js"></script>
+  <script src="../sidebar.js"></script>
+  <script src="../bottom-nav.js"></script>
+  <script src="../header.js"></script>
 </body>
 </html>

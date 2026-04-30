@@ -1,6 +1,4 @@
 const welcomeText = document.getElementById('welcome');
-const actionsDiv = document.getElementById('actions');
-const logoutBtn = document.getElementById('logoutBtn');
 
 const messageDiv = document.getElementById('message');
 
@@ -12,53 +10,27 @@ function showMessage(text, color = 'red') {
 let linksSet = false;
 let loginInterval;
 
-const BottomNav = document.querySelector(".bottom-nav");
-const tabs = document.querySelectorAll(".tab");
-const NavButtons = document.querySelectorAll(".bottom-nav button");
-
-BottomNav.addEventListener("click", (e) => {
-  const button = e.target.closest("button");
-  if (!button) return;
-
-  const tabId = button.dataset.tab;
-  
-});
-
-NavButtons.forEach(button => {
-  button.addEventListener("click", () => {
-
-    const tab = button.dataset.tab;
-
-    if (tab === "trainingsplan") {
-      window.location.replace('./trainingsplan/');
-    } else if (tab === "contracts") {
-      window.location.replace('./contracts/');
-    } else if (tab === "settings") {
-      window.location.replace('./settings/');
-    }
-
-  });
-});
-
 async function checkLogin() {
   try {
     const res = await fetch('/me', {
       credentials: 'include'
     });
 
-    if (res.status === 401) {
-      clearInterval(loginInterval); // stoppt den Timer
-      showMessage('Nicht eingeloggt. Weiterleitung...');
-      window.location.href = '../';
-      return;
-    }
-
     if (!res.ok) {
       showMessage('Server nicht erreichbar')
       return;
+    } else {
+      showMessage('');
     }
 
     const data = await res.json();
+
+    if (data.status === 401) {
+      clearInterval(loginInterval); // stoppt den Timer
+      showMessage('Nicht eingeloggt. Weiterleitung...');
+      window.location.replace('../');
+      return;
+    }
 
     if (!data.success) {
       welcomeText.textContent = data.message || 'Fehler';
@@ -67,6 +39,17 @@ async function checkLogin() {
 
     const user = data.user.username;
     const userFormatted = user.charAt(0).toUpperCase() + user.slice(1);
+
+    const role = data.user.role;
+
+    if (role === 'admin') {
+      if (typeof window.createAdminButtonSidebar === 'function') {
+          window.createAdminButtonSidebar();
+      }
+      if (typeof window.createAdminButtonBottomNav === 'function') {
+          window.createAdminButtonBottomNav();
+      }
+    }
 
      if (!linksSet) {
       welcomeText.textContent = `Wilkommen zurück ${userFormatted}`;
@@ -79,6 +62,8 @@ async function checkLogin() {
   } catch (err) {
     console.error('Try error:', err);
     welcomeText.textContent = 'Netzwerkfehler';
+  } finally {
+    setTimeout(checkLogin, 5000); // Alle 5 Sekunden erneut prüfen
   }
 }
 
@@ -96,30 +81,4 @@ function addNavLink(text, href) {
   nav.appendChild(link);
 }
 
-// 🔓 Logout
-logoutBtn.addEventListener('click', async () => {
-  try {
-    await fetch('/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
-
-    window.location.href = '../';
-  } catch (err) {
-    console.error(err);
-  }
-});
-
-function startLoginCheck() {
-  checkLogin();
-  // Alle 1000ms (1 Sekunde) prüfen
-  setInterval(async () => {
-    try {
-      await checkLogin();
-    } catch (err) {
-      console.error('Fehler beim Prüfen des Logins:', err);
-    }
-  }, 1000);
-}
-
-startLoginCheck();
+checkLogin();

@@ -183,3 +183,7 @@ button:hover {
   transform: translateY(-1px);
   background: rgba(84, 207, 255, 1);
 }
+
+.bottom-nav {
+  display: none;
+}

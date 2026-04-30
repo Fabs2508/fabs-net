@@ -86,3 +86,7 @@
   font-size: 11px;
   margin-top: 4px;
 }
+
+.sidebar {
+  display: none;
+}

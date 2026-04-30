@@ -94,20 +94,23 @@ router.post('/', async (req, res) => {
         console.error(err);
         return res.status(500).json({
           success: false,
-          message: 'Session konnte nicht gespeichert werden'
+          message: 'Session konnte nicht gespeichert werden',
+          status: 500
         });
       }
 
       return res.status(201).json({
         success: true,
-        message: 'Registrierung erfolgreich.'
+        message: 'Registrierung erfolgreich.',
+        status: 201
       });
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: 'Serverfehler'
+      message: 'Serverfehler',
+      status: 500
     });
   }
 });

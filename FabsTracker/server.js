@@ -16,7 +16,13 @@ const registerRoutes = require('./routes/register');
 const logoutRoutes = require('./routes/logout');
 const adminRoutes = require('./routes/admin/index');
 const meRoutes = require('./routes/me');
+
+const getUserDataRoutes = require('./routes/getUserData');
+const updateUserDataRoutes = require('./routes/updateUserData');
+const updateThemeRoutes = require("./routes/updateTheme");
+
 const homeRoutes = require('./routes/home/index');
+const profileRoutes = require('./routes/profile');
 
 const testRoutes = require('./routes/test');
 const pingRoutes = require('./routes/ping');
@@ -33,6 +39,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     httpOnly: true,
     secure: true,     // nur true bei HTTPS
@@ -52,7 +59,13 @@ app.use("/register", registerRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/admin", adminRoutes);
 app.use("/me", meRoutes);
+app.use("/getUserData", getUserDataRoutes);
+app.use("/updateUserData", updateUserDataRoutes)
+app.use("/updateTheme", updateThemeRoutes);
+
 app.use("/home", homeRoutes);
+app.use("/profile", profileRoutes);
+
 
 app.use("/test", testRoutes);
 app.use("/ping", pingRoutes);

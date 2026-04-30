@@ -31,14 +31,14 @@ async function checkLogin() {
     const data = await res.json();
 
     if (!data.success) {
-      welcomeText.textContent = data.message || 'Fehler';
+      //messageText.textContent = data.message //Meistens "Nicht eingeloggt"
       return;
     }
 
     const user = data.user.username;
 
-    window.location.href = 'home/home.html';
-    messageText.textContent = 'Weiterleitung...F';
+    window.location.replace('home/home.html');
+    messageText.textContent = 'Weiterleitung...';
     body.style.display = "none";
 
   } catch (err) {
@@ -47,4 +47,16 @@ async function checkLogin() {
   }
 }
 
-checkLogin();
+function startLoginCheck() {
+  checkLogin();
+  // Alle 3000ms (3 Sekunde) prüfen
+  setInterval(async () => {
+    try {
+      await checkLogin();
+    } catch (err) {
+      console.error('Fehler beim Prüfen des Logins:', err);
+    }
+  }, 3000);
+}
+
+startLoginCheck();

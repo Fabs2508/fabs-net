@@ -8,11 +8,30 @@ async function insertInitialUserData(userId) {
 
     // Das JSON-Paket für den neuen User
     const userData = JSON.stringify({
+        theme: "dark",
+        profileCompleted1: false, //Wichtige Daten
+        profileCompleted2: false,  // Unwichtige Daten
+
+        biometric_data: {
+            age: undefined,
+            gender: undefined,
+            height: undefined,
+            weight: undefined,
+            
+            bmi: undefined //Wird automatisch berechnet
+        },
+
+        trainingsplan: {
+            firstTime: true
+        },
         gripper: {
-            minKg: 5,
-            maxKg: 60,
-            totalTurns: 0,
-            isCalibrated: false
+            firstTime: true,
+            isCalibrated: false,
+            gripper1: {
+                minKg: undefined,
+                maxKg: undefined,
+                totalTurns: undefined
+            }
         }
     });
 

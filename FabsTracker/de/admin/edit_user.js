@@ -87,7 +87,12 @@ async function loadUsers() {
                 <span class="password">********</span>
                 <button class="toggle-password" data-hash="${user.password}">Show</button>
             </td>
-            <td class="role">${user.role}</td>
+            <td>
+              <select class="role-select" data-id="${user.id}">
+                <option value="user" ${user.role === "user" ? "selected" : ""}>User</option>
+                <option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option>
+              </select>
+            </td>
             <td><button class="delete-button" data-id="${user.id}">Löschen</button></td>
         `;
 
@@ -96,6 +101,26 @@ async function loadUsers() {
 
         // Toggle-Password Listener
         const btn = row.querySelector(".toggle-password");
+        const roleSelect = row.querySelector(".role-select");
+
+        roleSelect.addEventListener("change", async () => {
+          const newRole = roleSelect.value;
+
+          // Extra Bestätigung für Admin
+          if (newRole === "admin") {
+            const confirmed = confirm(
+              `Willst du ${user.username} wirklich Adminrechte geben?`
+            );
+
+            if (!confirmed) {
+              roleSelect.value = user.role;
+              return;
+            }
+          }
+
+          await updateRole(user.id, newRole);
+        });
+
         btn.addEventListener('click', () => {
           const span = btn.parentElement.querySelector("span");
           const hash = btn.dataset.hash;
@@ -191,6 +216,38 @@ async function createUser(username, email, password, role) {
       loadUsers();
     } else {
       showMessage(data.message || 'Fehler beim Erstellen');
+    }
+
+  } catch (err) {
+    console.error(err);
+    showMessage('Netzwerkfehler');
+  }
+}
+
+async function updateRole(userId, role) {
+  try {
+    const res = await fetch('/admin/change_role', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userId,
+        role
+      })
+    });
+
+    const data = await res.json();
+
+    if (data.status === 400) {
+      loadUsers();
+    }
+
+    if (data.success) {
+      showMessage('Rolle aktualisiert', 'green');
+    } else {
+      showMessage(data.message || 'Fehler beim Aktualisieren');
     }
 
   } catch (err) {

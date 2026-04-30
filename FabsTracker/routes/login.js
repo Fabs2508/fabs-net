@@ -24,41 +24,29 @@ const loginLimiter = rateLimit({
   legacyHeaders: false, // Deaktiviert alte X-RateLimit-Header
 });
 
-// Middleware: Prüft ob User eingeloggt ist
-const redirectIfLoggedIn = (req, res, next) => {
-    if (req.session.userId) {
-        return res.redirect('/home'); // Schickt eingeloggte User sofort weg vom Login
-    }
-    next();
-};
-
-router.post("/", loginLimiter, redirectIfLoggedIn, (req, res) => {
+router.post("/", loginLimiter, (req, res) => {
   const { email, password } = req.body;
 
-  //console.log(email, password);
+  const doLogin = async () => {
+    db.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email],
+      async (err, results) => {
+        if (err) {
+          return res.status(500).json({
+            success: false,
+            message: "Serverfehler",
+          });
+        }
 
-  db.query(
-    "SELECT * FROM users WHERE email = ?",
-    [email],
-    async (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({
-          success: false,
-          message: "Serverfehler",
-        });
-      }
+        if (results.length === 0) {
+          return res.status(401).json({
+            success: false,
+            message: "Email oder Passwort falsch!",
+          });
+        }
 
-      if (results.length === 0) {
-        return res.status(401).json({
-          success: false,
-          message: "Email oder Passwort falsch!",
-        });
-      }
-
-      const user = results[0];
-
-      try {
+        const user = results[0];
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
@@ -68,46 +56,48 @@ router.post("/", loginLimiter, redirectIfLoggedIn, (req, res) => {
           });
         }
 
+        // last_login updaten (OHNE Response!)
         db.query(
           "UPDATE users SET last_login = NOW() WHERE id = ?",
           [user.id],
           (updateErr) => {
             if (updateErr) {
-              console.error("Fehler beim Update von last_login:", updateErr);
-              // Wir machen trotzdem weiter, damit der User sich einloggen kann
+              console.error("Fehler beim Update:", updateErr);
             }
-
-            // Session setzen
-            req.session.userId = user.id;
-            req.session.role = user.role;
-            req.session.email = user.email;
-
-            req.session.save((err) => {
-              if (err) {
-                console.error(err);
-                return res.status(500).json({
-                  success: false,
-                  message: "Session konnte nicht gespeichert werden",
-                });
-              }
-
-              return res.status(200).json({
-                success: true,
-                message: "Login erfolgreich",
-              });
-            });
           }
         );
-        
-      } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-          success: false,
-          message: "Fehler beim Passwortvergleich",
+
+        // Session neu erstellen (einziger Response!)
+        req.session.regenerate((err) => {
+          //console.log("SESSION REGENERATE");
+          if (err) {
+            return res.status(500).json({
+              success: false,
+              message: "Session Fehler"
+            });
+          }
+
+          req.session.userId = user.id;
+          req.session.role = user.role;
+
+          req.session.save((err) => {
+            //console.log("SESSION SAVED");
+            if (err) {
+              return res.status(500).json({
+                success: false,
+                message: "Session konnte nicht gespeichert werden"
+              });
+            }
+            return res.json({
+                success: true,
+                message: "Login erfolgreich"
+              });
+          });
         });
       }
-    }
-  );
+    );
+  };
+  doLogin();
 });
 
 module.exports = router;

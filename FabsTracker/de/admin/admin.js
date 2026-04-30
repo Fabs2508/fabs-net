@@ -35,7 +35,7 @@ async function loadUsers() {
     }
     if (res.status === 403) {
         showMessage('Kein Zugriff');
-        window.location.href = '../login/login.html'
+        window.location.replace('../home')
         return;
     }
     if (res.status === 503) {
@@ -49,6 +49,9 @@ async function loadUsers() {
         if (!linksSet) {
             addLink('User bearbeiten', 'edit_user.html');
             addLink('Status', 'status.html');
+
+            window.createAdminButtonSidebar();
+            window.createAdminButtonBottomNav();
 
             linksSet = true;
         }

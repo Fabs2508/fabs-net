@@ -111,6 +111,66 @@ button:hover {
   background: #54cfff;
 }
 
+.role-select {
+  width: 100%;
+  padding: 8px 10px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: white;
+  font-weight: 600;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  outline: none;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* Hover */
+.role-select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Focus */
+.role-select:focus {
+  border-color: rgba(43, 188, 255, 0.8);
+  box-shadow: 0 0 0 2px rgba(43, 188, 255, 0.25);
+}
+
+/* Option Styling (browser limitiert, aber trotzdem) */
+.role-select option {
+  background: #1e1e1e;
+  color: white;
+}
+
+/* 🌞 Light Mode */
+[data-theme="light"] .role-select {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #111;
+}
+
+[data-theme="light"] .role-select:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .role-select:focus {
+  border-color: rgba(43, 188, 255, 0.7);
+  box-shadow: 0 0 0 2px rgba(43, 188, 255, 0.2);
+}
+
+[data-theme="light"] .role-select option {
+  background: white;
+  color: black;
+}
+
 .switch {
   position: relative;
   display: inline-block;

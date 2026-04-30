@@ -60,6 +60,7 @@ function register() {
     return;
   }
 
+
   //Zusammenfassen
   const data = {
     username: username,
@@ -70,7 +71,10 @@ function register() {
   
   button('loading');
 
+  getUserData();
+
   //Senden
+  /*
   fetch('/register', {
     method: 'POST',
     headers: {
@@ -82,7 +86,7 @@ function register() {
   .then(msg => {
     if(msg.success) {
       msg1('Registrierung erfolgreich! Weiterleitung...', 0, 'green');
-      window.location.href = '../home/home.html';
+      //window.location.href = '../home/home.html';
     } else {
       msg1(msg.message, 3500, 'red');
       button('reset');
@@ -94,4 +98,30 @@ function register() {
     button('reset');
   })
   .catch(err => failedfetch(err));
+  */
+}
+
+async function getUserData() {
+  try {
+    const res = await fetch('/getUserData', {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (!res.ok) {
+      //msg1('Server nicht erreichbar')
+      return;
+    }
+
+    const data = await res.json();
+
+    if (!data.profileCompleted) {
+      console.log("NotCompleted:", data);
+    } else {
+      console.log("Completed:", data);
+    }
+
+  } catch (err) {
+    console.error("Try Error:", err);
+  }
 }

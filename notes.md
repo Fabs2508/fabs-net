@@ -4,7 +4,7 @@ github {
     
     Dateien auf github aktualisieren:
         git add .         ("." ALLE geänderten Dateien)
-        git commit -m "test"
+        git commit -m "Backup Aktualisisieren"
 
         git push origin main
 
@@ -25,7 +25,7 @@ FabsTracker/de {
 
     /home{
 
-        1. Account Element(HTML) mit Bild(Anfangsbuchstabe vom User) und Dropdown(Einstellungen, Profil Settings, Logout)
+        1. Account Element(HTML) mit Bild(Standert "no Image" bild) und Dropdown(Einstellungen, Profil Settings, Logout)
 
     }
 
@@ -38,15 +38,15 @@ Lucidchart {
 
 
 :CHATGPT:
-Hallo ich programmiere gerade eine Gymapp(FabsTracker) mit html css und js(und Node.js + auch express Cookies) im Glassmorphism Style mit einer eigenen Domain(fabs-net.com, mit Cloudflare) über einen Raspberry pi 4 Model B Tunnel(und MySQL als Datenbank). Ich habe jetzt schon Anmelden(login), Registrieren(signup) und eine Startseite.
+Hallo ich programmiere gerade eine Gymapp(FabsTracker) mit html css und js(und Node.js + auch express Cookies(auch mit express-rate-limit) + auch mit bcrypt + HTTP-only Cookies(SameSite: 'lax', secure: true)) im Glassmorphism Style mit einer eigenen Domain(fabs-net.com, mit Cloudflare) über einen Raspberry pi 4 Model B Tunnel(und MySQL als Datenbank). Ich habe jetzt schon Anmelden(login), Registrieren(signup) und eine Homeseite(In der Navigationsleiste: Home, FoodTracker(disabled), Trainingsplan, Fortschritte(disabled), Griptrainer(disabled) und admin(nur wenn der User die role "admin" hat, wird im Backend geprüft)) die erkennt, ob man auf einem kleinem Bildschirm ist oder auf einem großem(Sidebar oder Bottom-nav).
 
 FabsTracker Codes:
     Benutzer updaten: node FabsTracker/routes/utils/updateUser.js
 
 
 MySQL:
-    Backup: mysqldump -u root -p gymapp > backup/MySQL/backup.sql
+    Backup Speichern: mysqldump -u root -p gymapp > backup/MySQL/backup.sql
+    Backup Wiederherstellen: mysql -u root -p gymapp < backup/MySQL/backup.sql
 
 NOCH MACHEN:
-    Backend, Route z.B. /home für das auslesen und umschreiben der "userInfo" Spalte.
-    Und spalte "theme" in JS einbauen, ist bereits in MySQL.
+    Theme ändern über account img oben rechts

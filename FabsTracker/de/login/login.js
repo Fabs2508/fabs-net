@@ -1,16 +1,6 @@
 const loginBtn = document.querySelector('.btn');
 
 
-(function() {
-      // Hier musst du prüfen, wie dein Login gespeichert ist 
-      // (z.B. ein Token im localStorage oder ein Cookie)
-      const isLoggedIn = localStorage.getItem('user_token'); 
-
-      // Wenn die URL '/login' ist UND der User eingeloggt ist -> ab nach Hause
-      if (isLoggedIn && window.location.pathname.includes('login')) {
-        window.location.replace('/home');
-      }
-    })();
 
 
 loginBtn.addEventListener('click', () => {
@@ -50,6 +40,18 @@ async function loadConfig() {
   const PORT = config.appPORT;
 }
 loadConfig();
+
+/* CHECK: Wenn User schon eingeloggt ist → direkt weiterleiten
+fetch('/me', {
+  credentials: 'include'
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    window.location.replace('/FabsTracker/de/home/home.html');
+  }
+});
+*/
 
 function msg1(msg, duration, color) {
   document.querySelector('.msg').innerHTML =  msg;
@@ -93,11 +95,11 @@ function login() {
   };
 
   if(data.email === '' || data.password === '') {
-    msg1('Bitte füllen Sie alle Felder aus!', 2000, 'red');
+    msg1('Bitte fülle alle Felder aus!', 2000, 'red');
     button('reset');
     return;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-    msg1('Bitte geben Sie eine gültige E-Mail-Adresse ein!', 2500, 'red');
+    msg1('Bitte gib eine gültige E-Mail-Adresse ein!', 2500, 'red');
     button('reset');
     return;
   }
@@ -117,7 +119,7 @@ function login() {
       if(msg.success) {
         msg1('Login erfolgreich! Weiterleitung...', 0, 'green');
         button('reset');
-        window.location.replace('../home/home.html');
+        window.location.replace('/FabsTracker/de/home/home.html');
       } else {
         Functionable = true; // Erlaubt weitere Login-Versuche
         msg1(msg.message, 2500, 'red');

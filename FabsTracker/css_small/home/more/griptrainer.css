@@ -39,42 +39,6 @@ body {
     linear-gradient(135deg, #9b9b9b, #9b9b9b 45%, #ffffff);
 }
 
-.background-shape {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(40px);
-  z-index: 0;
-}
-
-.shape1 {
-  width: 220px;
-  height: 220px;
-  background: rgba(43, 188, 255, 0.18);
-  top: 8%;
-  left: 2%;
-}
-.shape2 {
-  width: 260px;
-  height: 260px;
-  background: rgba(255, 255, 255, 0.08);
-  bottom: 10%;
-  right: 2%;
-}
-[data-theme="light"] .shape1 {
-  width: 220px;
-  height: 220px;
-  background: rgba(0, 0, 0, 0.55);
-  top: 8%;
-  left: 10%;
-}
-[data-theme="light"] .shape2 {
-  width: 260px;
-  height: 260px;
-  background: rgba(255, 255, 255, 0.55);
-  bottom: 10%;
-  right: 8%;
-}
-
 h1 {
   margin: 90px auto 0 auto; /* oben | rechts/links auto | unten */
   font-size: 25px;
@@ -84,20 +48,13 @@ h1 {
   max-width: 600px;
 }
 
-#welcome {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 20px;
-  color: var(--text);
-}
-
 .main-box {
   max-height: 500px;
   overflow-y: auto;
-  margin-top: 50px;
-  margin-left: 2.5%; /* % muss bleiben */
-  margin-bottom: 2.5%; /* % muss bleiben */
-  width: 95%;
+  margin-top: 30px;
+  margin-left: 10%; /* % muss bleiben */
+  margin-bottom: 10%; /* % muss bleiben */
+  width: 80%;
 
   border-radius: 30px;
   border: 2px solid var(--rgba);
@@ -106,31 +63,21 @@ h1 {
 }
 
 .main-box h1 {
-  margin-top: 50px;
+  margin-top: 30px;
   margin-bottom: 10px;
   font-size: 32px;
   text-align: center;
 }
 
-.main-box h2 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 28px;
+#message {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 25px;
+  color: var(--text);
   text-align: center;
 }
 
 .main-box p {
   font-weight: bold;
   font-size: large;
-}
-
-#message {
-  margin-bottom: 15px;
-  min-height: 20px;
-  font-weight: 600;
-}
-
-button:hover {
-  transform: translateY(-1px);
-  background: rgba(84, 207, 255, 1);
 }

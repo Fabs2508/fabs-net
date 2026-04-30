@@ -1,3 +1,5 @@
+//!!!NUR  FÜR DIE KONSOLE!!!
+
 const { insertInitialUserData } = require('./initUser');
 const readline = require('readline');
 
