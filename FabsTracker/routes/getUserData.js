@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require("./db"); // DB-Verbindung
+const { requireLogin } = require("./middleware/requireLogin");
 
-router.get('/', (req, res) => {
+router.get('/', requireLogin, (req, res) => {
   db.query(
     'SELECT userData, role FROM users WHERE id = ?',
     [req.session.userId],
@@ -16,7 +17,7 @@ router.get('/', (req, res) => {
       }
 
       if (results.length === 0) {
-        return res.status(404).json({
+        return res.json({
           success: false,
           message: 'User nicht gefunden',
           status: 404

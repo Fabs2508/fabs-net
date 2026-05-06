@@ -1,13 +1,12 @@
 // Pfad-Konfiguration
-const BASE_PATH_SIDEBAR_SETTINGS = "/FabsTracker/de/home/settings";
+const BASE_PATH_SIDEBAR_SETTINGS = "/FabsTracker/de/home/settings/";
 
 function handleSidebarClick(tab) {
     let targetUrl = "";
     switch (tab) {
-        case "Profil": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + '/home/'; break;
-        case "trainingsplan": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + '/home/trainingsplan/'; break;
-        case "griptrainer": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + '/home/more/griptrainer/'; break;
-        case "admin": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + "/admin/admin.html"; break;
+        case "profile": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + 'profile.html'; break;
+        case "biometricData": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + 'biometricData.html'; break;
+        case "security": targetUrl = BASE_PATH_SIDEBAR_SETTINGS + 'security.html'; break;
     }
 
     if (targetUrl) {

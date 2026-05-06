@@ -13,6 +13,7 @@ const db = require('./routes/db');
 
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
+const completeProfileRoutes = require('./routes/completeProfile');
 const logoutRoutes = require('./routes/logout');
 const adminRoutes = require('./routes/admin/index');
 const meRoutes = require('./routes/me');
@@ -20,6 +21,8 @@ const meRoutes = require('./routes/me');
 const getUserDataRoutes = require('./routes/getUserData');
 const updateUserDataRoutes = require('./routes/updateUserData');
 const updateThemeRoutes = require("./routes/updateTheme");
+
+const heartbeatRoutes = require("./routes/heartbeat");
 
 const homeRoutes = require('./routes/home/index');
 const profileRoutes = require('./routes/profile');
@@ -56,12 +59,15 @@ app.use(cors({
 
 app.use("/login", loginRoutes);
 app.use("/register", registerRoutes);
+app.use("/completeProfile", completeProfileRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/admin", adminRoutes);
 app.use("/me", meRoutes);
 app.use("/getUserData", getUserDataRoutes);
 app.use("/updateUserData", updateUserDataRoutes)
 app.use("/updateTheme", updateThemeRoutes);
+
+app.use("/heartbeat", heartbeatRoutes);
 
 app.use("/home", homeRoutes);
 app.use("/profile", profileRoutes);

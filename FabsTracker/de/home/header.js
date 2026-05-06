@@ -83,12 +83,22 @@ async function me() {
     });
 
     const data = await res.json();
-    const username = data.user.username;
-    const userFormatted = username.charAt(0).toUpperCase() + username.slice(1);
+
+    if (data.status === 401) {
+      return;
+    }
+
+    if (!res.ok) {
+      console.log('Server nicht erreichbar')
+      return;
+    }
+
+    const username1 = data.user.username;
+    const userFormatted = username1.charAt(0).toUpperCase() + username1.slice(1);
 
     h3username.textContent = userFormatted;
   } catch(err) {
-    console.log("me Error" + err);
+    console.log("me Error: " + err);
   } 
 }
 

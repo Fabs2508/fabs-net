@@ -1,0 +1,276 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top left, rgba(43,188,255,0.2), transparent),
+    radial-gradient(circle at bottom right, rgba(255,255,255,0.1), transparent),
+    linear-gradient(135deg, #0a0a0a, #111);
+  color: white;
+  overflow: hidden;
+}
+
+.header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 30px;
+  z-index: 10;
+}
+
+.header-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  cursor: pointer;
+}
+
+.bg {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+
+.shape1 { width: 250px; height: 250px; background: rgba(43,188,255,0.2); top: 10%; left: 10%; }
+.shape2 { width: 300px; height: 300px; background: rgba(255,255,255,0.08); bottom: 10%; right: 10%; }
+
+.complete-box {
+  position: relative;
+  z-index: 1;
+  width: 850px;
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  text-align: center;
+}
+
+.complete-box h2 { margin-bottom: 5px; font-size: 28px; }
+.complete-box p { margin-bottom: 30px; color: #bdbdbd; }
+
+.row-one {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: flex-end;
+}
+.row-two {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: flex-end;
+}
+
+.field, .gender-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+}
+
+#birthDisplay {
+  display: block;
+  color: #2bbcff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.birth-container {
+  width: 375px;
+}
+
+.value {
+  color: #2bbcff;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  outline: none;
+  margin: 10px 0;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #2bbcff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(43, 188, 255, 0.5);
+}
+
+.date-dropdowns, 
+.gender-options {
+  display: flex;
+  gap: 12px;
+  height: 48px;
+  width: 100%;
+}
+
+.custom-dropdown, .gender-option-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.dropdown-selected, .gender-btn {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 14px;
+}
+
+.custom-dropdown, .gender-btn, .btn {
+  user-select: none;
+  -webkit-user-select: none; /* Für Safari */
+}
+
+.custom-dropdown.active .dropdown-selected,
+.gender-options input[type="radio"]:checked + .gender-btn {
+  background: #2bbcff;
+  color: black;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(43, 188, 255, 0.4);
+  border-color: #2bbcff;
+}
+
+.gender-options {
+  justify-content: center; /* Zentriert die Buttons in der Mitte der Reihe */
+  gap: 10px;
+}
+
+.gender-btn {
+  flex: none;       /* Verhindert, dass sie den ganzen Platz einnehmen */
+  width: 120px;     /* Feste Breite für beide Buttons */
+  padding: 10px 0;
+}
+
+.dropdown-list {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: calc(100% + 20px);
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(25, 25, 25, 0.98);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  z-index: 100;
+  display: none;
+}
+
+.custom-dropdown.active .dropdown-list {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.dropdown-item:hover {
+  background: #2bbcff;
+  color: black;
+}
+
+.dropdown-list::-webkit-scrollbar { width: 5px; }
+.dropdown-list::-webkit-scrollbar-thumb { background: #2bbcff; border-radius: 10px; }
+
+.gender-options input[type="radio"] {
+  display: none;
+}
+
+input[type="password"] {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.07);
+  color: white;
+  text-align: center;
+  outline: none;
+}
+
+input[type="password"]::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+input:focus, .slider:focus {
+  box-shadow: none;
+}
+
+.msg {
+  height: 20px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: #2bbcff;
+  color: black;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #54cfff;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(43, 188, 255, 0.3);
+}

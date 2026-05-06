@@ -31,7 +31,31 @@ function button(parameter) {
     button.innerText = 'Lädt...';
   } else if(parameter === 'reset') {
     button.disabled = false;
-    button.innerText = 'Login';
+    button.innerText = 'Registrieren';
+  }
+}
+
+async function getUserData() {
+  try {
+    const res = await fetch('/getUserData', {
+      credentials: 'include'
+    });
+
+    if (!res.ok) {
+      //msg1('Server nicht erreichbar')
+      return;
+    }
+
+    const data = await res.json();
+
+    if (!data.profileCompleted) {
+      console.log("NotCompleted:", data);
+    } else {
+      console.log("Completed:", data);
+    }
+
+  } catch (err) {
+    console.error("Try Error:", err);
   }
 }
 
@@ -71,10 +95,8 @@ function register() {
   
   button('loading');
 
-  getUserData();
-
   //Senden
-  /*
+
   fetch('/register', {
     method: 'POST',
     headers: {
@@ -85,8 +107,8 @@ function register() {
   .then(res => res.json())
   .then(msg => {
     if(msg.success) {
-      msg1('Registrierung erfolgreich! Weiterleitung...', 0, 'green');
-      //window.location.href = '../home/home.html';
+      msg1('Weiterleitung...', 0, 'green');
+      window.location.replace("completeProfile.html");
     } else {
       msg1(msg.message, 3500, 'red');
       button('reset');
@@ -98,30 +120,5 @@ function register() {
     button('reset');
   })
   .catch(err => failedfetch(err));
-  */
-}
 
-async function getUserData() {
-  try {
-    const res = await fetch('/getUserData', {
-      method: 'GET',
-      credentials: 'include',
-    });
-
-    if (!res.ok) {
-      //msg1('Server nicht erreichbar')
-      return;
-    }
-
-    const data = await res.json();
-
-    if (!data.profileCompleted) {
-      console.log("NotCompleted:", data);
-    } else {
-      console.log("Completed:", data);
-    }
-
-  } catch (err) {
-    console.error("Try Error:", err);
-  }
 }

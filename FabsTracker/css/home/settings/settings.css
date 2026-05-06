@@ -25,7 +25,7 @@ body {
   background:
     radial-gradient(circle at top left, rgba(43, 188, 255, 0.18), transparent 30%),
     radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.08), transparent 30%),
-    linear-gradient(135deg, #0a0a0a, #252525 45%, #0d0d0d);
+    linear-gradient(135deg, #0a0a0a, #303030 45%, #2e2e2e);
 }
 
 [data-theme="light"] body {
@@ -57,7 +57,7 @@ body {
 }
 
 .profile-box .pfp {
-  width: 150px;
+  width: 100px;
   display: block;
   transform: translateX(80px);
 }
@@ -65,8 +65,8 @@ body {
 .edit-overlay {
     position: absolute;
     top: 0;
-    left: 80px; /* Direkt auf die Position deines Bildes gesetzt */
-    width: 150px;
+    margin-left: 80px; /* Direkt auf die Position deines Bildes gesetzt */
+    width: 100px;
     height: 100%;
     
     /* Ein leichter Grauschleier hilft bei der Erkennung */

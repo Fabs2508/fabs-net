@@ -13,7 +13,7 @@ async function insertInitialUserData(userId) {
         profileCompleted2: false,  // Unwichtige Daten
 
         biometric_data: {
-            age: undefined,
+            birthdate: undefined,
             gender: undefined,
             height: undefined,
             weight: undefined,

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../img/FabsTracker_Logo.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="../../css/completeProfile.css" media="screen and (min-width: 901px)">
+
+    <link rel="stylesheet" href="../../css_small/completeProfile.css" media="screen and (max-width: 900px)">
+
+    <title>FabsTracker | Profil Abschließen</title>
+</head>
+<body>
+
+  <header class="header">
+      <div class="header-inner">
+          <img src="../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
+
+          <nav id="nav"></nav>
+      </div>
+  </header>
+
+  <div class="bg shape1"></div>
+  <div class="bg shape2"></div>
+
+  <div class="complete-box">
+    <h2 id="h2username">‎ </h2>
+    <p>Schließe dein Profil ab</p>
+
+    <!-- Geänderte Klassennamen -->
+    <div class="row row-one">
+        <div class="birth-container">
+            <label for="birthDate">Geburtsdatum:</label>
+            <label><span id="birthDisplay">2000-01-01</span></label>
+            
+            <div class="birth-inputs">
+                <!-- Slider für das Jahr -->
+                <div class="year-box">
+                    <input class="slider" type="range" min="1950" max="2026" value="2000" id="birthYear">
+                </div>
+
+                <!-- Dropdowns für Monat und Tag -->
+                <div class="date-dropdowns">
+                    
+                    <!-- Tag Dropdown -->
+                    <div class="custom-dropdown" id="dayDropdown">
+                        <div class="dropdown-selected">01</div>
+                        <div class="dropdown-list">
+                            <!-- Wird per JS gefüllt -->
+                        </div>
+                        <input type="hidden" id="birthDay" value="1">
+                    </div>
+
+                    <!-- Monat Dropdown -->
+                    <div class="custom-dropdown" id="monthDropdown">
+                        <div class="dropdown-selected">Januar</div>
+                        <div class="dropdown-list">
+                            <!-- Wird per JS gefüllt -->
+                        </div>
+                        <input type="hidden" id="birthMonth" value="0">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="gender-container">
+            <label>Geschlecht</label>
+            <div class="gender-options">
+                <input type="radio" name="gender" value="male" id="male">
+                <label for="male" class="gender-btn">Männlich</label>
+
+                <input type="radio" name="gender" value="female" id="female">
+                <label for="female" class="gender-btn">Weiblich</label>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row row-two">
+        <div class="field">
+            <label for="height">Größe</label>
+            <label><span class="value" id="heightValue">1m 80cm</span></label>
+            <input class="slider" type="range" min="100" max="230" id="height" value="180" placeholder="Deine Größe">
+        </div>
+        <div class="field">
+            <label for="weight">Gewicht</label>
+            <label><span class="value" id="weightValue">80kg</span></label>
+            <input class="slider" type="range" min="10" max="150" value="80" id="weight" placeholder="Dein Gewicht">
+        </div>
+    </div>
+
+
+    <h3 class="msg"></h3>
+
+    <button class="btn">Abschließen</button>
+  </div>
+  <script src="completeProfile.js"></script>
+</body>
+</html>

@@ -2,8 +2,6 @@ const messageDiv = document.getElementById('message');
 
 let linksSet;
 
-username.innerHTML = "test";
-
 function showMessage(text, color = 'red') {
   messageDiv.textContent = text;
   messageDiv.style.color = color;
@@ -15,18 +13,20 @@ async function getData() {
       credentials: 'include'
     });
 
-    if (res.status === 401) {
-      showMessage('Nicht eingeloggt. Weiterleitung...');
-      window.location.replace('../../');
-      return;
-    }
-
     if (!res.ok) {
       console.log('Server nicht erreichbar')
       return;
     }
 
     const data = await res.json();
+
+    if (data.status === 401) {
+      showMessage('Nicht eingeloggt. Weiterleitung...');
+      window.location.replace('../../');
+      return;
+    }
+
+    console.log(data)
 
     if (!data.success) {
       showMessage(data.message || 'Fehler');
@@ -47,7 +47,7 @@ async function getData() {
     }
 
   } catch (err) {
-    console.error('Try error:', err);
+    console.error("me Error:" + err);
   }
 }
 

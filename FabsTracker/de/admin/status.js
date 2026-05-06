@@ -33,7 +33,8 @@ const ctx_style = document.getElementById('cpuChart');
 
 let errorNode = 0;
 let errorPi = 0;
-let interval;
+let intervalNode;
+let intervalPi;
 
 let cpuData = [];
 let labels = [];
@@ -156,11 +157,14 @@ async function loadNodeStatus() {
             return;
         }
 
-        error = 0; // reset bei Erfolg
+        errorNode = 0; // reset bei Erfolg
 
         const data = await res.json();
 
-        const cpuValue = data.cpuLoad[0]; // erster Wert
+        const cpuValue = Number(data.cpuLoad[0]); // erster Wert
+        if (!Number.isFinite(cpuValue)) {
+            throw new Error("Ungueltiger CPU Load Wert");
+        }
 
         cpuData.push(cpuValue);
         labels.push(new Date().toLocaleTimeString());
@@ -187,7 +191,7 @@ async function loadNodeStatus() {
         }
 
 
-        node_cpu.innerText = `${data.cpuLoad[0]}`;
+        node_cpu.innerText = `${cpuValue}`;
         node_cpu.setAttribute('title', data.cpuLoad);
 
         node_memory.innerText = `${Math.round(data.memory.free / 1024 / 1024)} MB`;
@@ -247,27 +251,11 @@ async function loadPiStatus() {
             return;
         }
 
-        error = 0; // reset bei Erfolg
+        errorPi = 0; // reset bei Erfolg
 
         const data = await res.json();
 
         //console.log("Pi Status:", data);
-
-        const cpuValue = data.mhz; // erster Wert
-
-
-        cpuData.push(cpuValue);
-        labels.push("");
-
-        // max 20 Punkte behalten (wie Task Manager)
-        if (cpuData.length > 10) {
-            cpuData.shift();
-            labels.shift();
-        }
-
-        if (!document.hidden) {
-            cpuChart.update();
-        }
 
         pi_statusValue.innerText = "online";
         pi_statusValue.style.color = "green";

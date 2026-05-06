@@ -1,5 +1,12 @@
+const messageDiv = document.getElementById('message');
+
 let linksSet = false;
 let loginInterval;
+
+function showMessage(text, color = 'red') {
+  messageDiv.textContent = text;
+  messageDiv.style.color = color;
+}
 
 async function checkLogin() {
   try {
@@ -7,34 +14,33 @@ async function checkLogin() {
       credentials: 'include'
     });
 
-    if (res.status === 401) {
+    const data = await res.json();
+
+    if (data.status === 401) {
       clearInterval(loginInterval); // stoppt den Timer
-      //showMessage('Nicht eingeloggt. Weiterleitung...');
+      showMessage('Nicht eingeloggt. Weiterleitung...');
       window.location.replace('../../');
       return;
     }
 
     if (!res.ok) {
-      //showMessage('Server nicht erreichbar')
+      showMessage('Server nicht erreichbar')
       return;
     }
-
-    const data = await res.json();
 
     if (!data.success) {
-      welcomeText.textContent = data.message || 'Fehler';
+      //welcomeText.textContent = data.message || 'Fehler';
       return;
     }
 
-    
-
-    const trainingsplanData = data.userData;
-    const firstTime = trainingsplanData.trainingsplan.firstTime;
+    const trainingsplanData = data.userData.trainingsplan;
 
     const role = data.role;
 
     //console.log('First Time:', firstTime);
     //console.log('Role:', role);
+
+    //showMessage(`${trainingsplanData.firstTime} | ${role}`, "green")
 
     if (role === 'admin') {
       if (typeof window.createAdminButtonSidebar === 'function') {

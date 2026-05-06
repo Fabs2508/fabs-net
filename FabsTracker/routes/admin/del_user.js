@@ -12,6 +12,12 @@ router.delete('/:id', requireAdmin, (req, res) => {
       message: 'Du kannst dich nicht selbst löschen'
     });
   }
+  if (userId === 108) {
+    return res.status(400).json({
+      success: false,
+      message: 'Du kannst nicht den Owner löschen'
+    });
+  }
 
   db.query(
     'DELETE FROM users WHERE id = ?',

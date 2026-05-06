@@ -13,33 +13,37 @@
     <link rel="stylesheet" href="../../../../css_small/home/header.css" media="screen and (max-width: 900px)">
     <link rel="stylesheet" href="../../../../css_small/home/bottom-nav.css" media="screen and (max-width: 900px)">
 
+    <script src="../../../heartbeat.js"></script>
+
     <title>FabsTracker | Griptrainer</title>
 </head>
 <body>
     <header class="header">
         <div class="header-inner">
-        <img src="../../../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
+            <img src="../../../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
 
-        <div class="profile-wrapper">
-            <div class="profile-icon" id="profileBtn">
-            <img src="../../../../img/standart_user.png" alt="profile">
+            <h3 id="h3username">username</h3>
+
+            <div class="profile-wrapper">
+                <div class="profile-icon" id="profileBtn">
+                    <img src="../../../../img/standart_user.png" alt="profile">
+                </div>
+
+                <div class="dropdown" id="profileDropdown">
+                    <a href="/FabsTracker/de/home/settings/index.html">Einstellungen</a>
+
+                    <div class="dropdown-item switch-row">
+                        <span>Theme</span>
+
+                        <label class="switch">
+                        <input type="checkbox" id="themeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                    </div>
+
+                    <button id="logoutBtn">Logout</button>
+                </div>
             </div>
-
-            <div class="dropdown" id="profileDropdown">
-            <a href="/FabsTracker/de/home/settings/index.html">Einstellungen</a>
-
-            <div class="dropdown-item switch-row">
-                <span>Theme</span>
-
-                <label class="switch">
-                <input type="checkbox" id="themeSwitch">
-                <span class="slider"></span>
-                </label>
-            </div>
-
-            <button id="logoutBtn">Logout</button>
-            </div>
-        </div>
         </div>
     </header>
 
