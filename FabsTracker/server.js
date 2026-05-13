@@ -18,6 +18,7 @@ const logoutRoutes = require('./routes/logout');
 const adminRoutes = require('./routes/admin/index');
 const meRoutes = require('./routes/me');
 
+const getUserStatusRoutes = require('./routes/getUserStatus');
 const getUserDataRoutes = require('./routes/getUserData');
 const updateUserDataRoutes = require('./routes/updateUserData');
 const updateThemeRoutes = require("./routes/updateTheme");
@@ -63,6 +64,7 @@ app.use("/completeProfile", completeProfileRoutes);
 app.use("/logout", logoutRoutes);
 app.use("/admin", adminRoutes);
 app.use("/me", meRoutes);
+app.use("/getUserStatus", getUserStatusRoutes);
 app.use("/getUserData", getUserDataRoutes);
 app.use("/updateUserData", updateUserDataRoutes)
 app.use("/updateTheme", updateThemeRoutes);
@@ -84,7 +86,7 @@ app.get("/", (req, res) => {
 
 app.get('/admin/users', requireAdmin, (req, res) => {
   db.query(
-    'SELECT id, username, email, password, role FROM users',
+    'SELECT id, username, email, role, last_seen FROM users',
     (err, results) => {
       if (err) {
         console.error(err);

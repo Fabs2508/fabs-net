@@ -77,7 +77,7 @@ function register() {
     msg1('Der Benutzername muss zwischen 3 und 20 Zeichen lang sein!', 2500, 'red');
     return;
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    msg1('Bitte gebe eine gültige E-Mail-Adresse ein!', 1500, 'red');
+    msg1('Bitte gib eine gültige E-Mail-Adresse ein!', 1500, 'red');
     return;
   } else if (password !== passwordConfirm) {
     msg1('Die Passwörter stimmen nicht überein!', 1500, 'red');

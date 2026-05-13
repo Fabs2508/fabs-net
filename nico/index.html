@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            color: rgb(255, 255, 255);
+            background-color: rgb(31, 31, 31);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-image: url('bradar-what-is-dis-bradar.png');
+        }
+
+        main {
+            background-color: rgb(41, 41, 41);
+            border-radius: 16px;
+            width: 100%;
+            height: 300px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
+    <title>Seite von Nico</title>
+</head>
+<body>
+    <main>
+        <h1>Nico, hier hast du den Beweis, das ist meine Seite!</h1>
+    </main>
+
+    <script>
+        async function init() {
+            const res = await fetch('https://fabs-net.com:3010/init', {
+                credentials: 'include'
+            });
+            console.log("test")
+        }
+        init();
+    </script>
+
+</body>
+</html>

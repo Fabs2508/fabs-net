@@ -1,4 +1,8 @@
 const h2username = document.getElementById('h2username');
+const completeP = document.querySelector('.completeP');
+const rowone = document.querySelector('.row-one');
+const rowtwo = document.querySelector('.row-two');
+const btn = document.querySelector('.btn');
 
 const yearSlider = document.getElementById('birthYear');
 const display = document.getElementById('birthDisplay');
@@ -136,34 +140,6 @@ function button(parameter) {
   }
 }
 
-let linksSet;
-async function me() {
-    try {
-        const res = await fetch('/me', { credentials: 'include' });
-        if (!res.ok) {
-            msg1('Server nicht erreichbar', 3000, 'red');
-            return;
-        }
-        const data = await res.json();
-        if (data.status === 401) {
-            msg1('Konto nicht Gefunden. Weiterleitung...', 2000, 'red');
-            setTimeout(() => window.location.replace('../'), 2000);
-            return;
-        }
-        if (data.success) {
-            const user = data.user.username;
-            const userFormatted = user.charAt(0).toUpperCase() + user.slice(1);
-            if (!linksSet) {
-                h2username.textContent = `Willkommen ${userFormatted}`;
-                linksSet = true;
-            }
-        }
-    } catch (err) {
-        console.error('Try error:', err);
-        msg1('Netzwerkfehler', 3000, 'red');
-    }
-}
-
 btnComplete.onclick = async () => {
     // 1. Daten sammeln
     const year = yearSlider.value;
@@ -198,13 +174,12 @@ btnComplete.onclick = async () => {
             },
             body: JSON.stringify(data)
         })
-        .then(msg1('Prüfen...', 0, '#2bbcff'))
         .then(res => res.json())
         .then(msg => {
             if(msg.success) {
                 button("reset");
                 msg1('Weiterleitung...', 0, 'green');
-                window.location.replace("completeProfile.html");
+                window.location.replace("../home");
             } else {
                 msg1(msg.message, 3500, 'red');
                 button('reset');
@@ -219,4 +194,3 @@ btnComplete.onclick = async () => {
 
 setupCustomDropdown('monthDropdown', months, 0, updateDate);
 updateDate();
-me();

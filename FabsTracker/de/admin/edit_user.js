@@ -1,18 +1,16 @@
 const usersTable = document.getElementById('usersTable');
 const messageDiv = document.getElementById('message');
 const messageDiv2 = document.getElementById('secondmessage');
-const tablewrapper = document.getElementsByClassName('table-wrapper')[0];
-const adminbox = document.getElementsByClassName('admin-box')[0];
+const tablewrapper = document.querySelector('.table-wrapper');
+const adminbox = document.querySelector('.admin-box');
 
-const createUserBox = document.getElementsByClassName('create-user')[0];
+const createUserBox = document.querySelector('.create-user');
 const createUserButton = document.getElementById('createUserButton');
 const ignoreSwitch = document.getElementById('switch');
 const backButton = document.getElementById('backButton');
 
-const username = document.getElementById('newUsername').value;
-const email = document.getElementById('newEmail').value;
-const password = document.getElementById('newPassword').value;
-const role = document.getElementById('newRole').value;
+let currentPage = 1; 
+const rowsPerPage = 5;
 
 ignoreSwitch.checked = localStorage.getItem('ignoreEmptyFields') === 'true';
 
@@ -25,182 +23,199 @@ function showMessage(text, color = 'red') {
   messageDiv.style.color = color;
 }
 
-async function loadUsers() {
+let loginInterval;
+
+async function checkLogin() {
   try {
-    const res = await fetch('/admin/users', {
-      method: 'GET',
+    const res = await fetch('/getUserStatus', {
       credentials: 'include'
     });
 
-    if (res.status === 401) {
-      adminbox.style.display = 'none'; // Alles unsichtbar machen
-      window.location.href = '../login/login.html';
+    if (!res.ok) {
+      showMessage('Server nicht erreichbar')
       return;
+    } else {
+      showMessage('');
     }
-
-    if (res.status === 403) {
-      showMessage('Kein Zugriff');
-      messageDiv2.innerHTML = '<p>Zu <a href="../login/login.html">Login</a></p>';
-      tablewrapper.style.display = 'none'; // Tabelle unsichtbar machen
-      createUserBox.style.display = 'none'; //createUser unsichtbar machen
-      return;
-    }
-
-    createUserButton.addEventListener('click', () => createUser(document.getElementById('newUsername').value, // Erstellen Button
-      document.getElementById('newEmail').value,
-      document.getElementById('newPassword').value,
-      document.getElementById('newRole').value
-    ));
-
-    ignoreSwitch.addEventListener('change', () => {
-      if (ignoreSwitch.checked) {
-        showMessage('Leere Felder werden ignoriert', 'green');
-        localStorage.setItem('ignoreEmptyFields', 'true');
-      } else {
-        showMessage('Leere Felder werden nicht ignoriert', 'green');
-        localStorage.setItem('ignoreEmptyFields', 'false');
-      }
-    });
 
     const data = await res.json();
 
+    if (data.status === 401) {
+      clearInterval(loginInterval); // stoppt den Timer
+      showMessage('Nicht eingeloggt. Weiterleitung...');
+      window.location.replace('../');
+      return;
+    }
+
+    if (!data.success) {
+      welcomeText.textContent = data.message || 'Fehler';
+      return;
+    }
+     
+
+  } catch (err) {
+    console.error('Try error:', err);
+    showMessage("Netzwerkfehler")
+  } finally {
+    setTimeout(checkLogin, 5000); // Alle 5 Sekunden erneut prüfen
+  }
+}
+
+checkLogin();
+
+function renderPagination(totalPages) {
+  let nav = document.getElementById('pagination-nav');
+  if (!nav) {
+    nav = document.createElement('div');
+    nav.id = 'pagination-nav';
+    nav.className = 'pagination';
+    tablewrapper.after(nav);
+  }
+
+  if (totalPages <= 1) {
+    nav.innerHTML = '';
+    nav.style.display = 'none';
+    return;
+  }
+
+  nav.style.display = 'flex'; 
+  nav.innerHTML = '';
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.innerText = i;
+    btn.className = (i === currentPage) ? 'active' : '';
+    btn.onclick = async (e) => {
+      e.preventDefault();
+      currentPage = i;
+      await loadUsers(); 
+    };
+    nav.appendChild(btn);
+  }
+}
+
+async function loadUsers() {
+  try {
+    const res = await fetch('/admin/users', { method: 'GET', credentials: 'include' });
+
+    if (res.status === 403) {
+      showMessage('Kein Zugriff');
+      tablewrapper.style.display = 'none';
+      createUserBox.style.display = 'none';
+      return;
+    }
+
+    const data = await res.json();
     if (!data.success) {
       showMessage(data.message || 'Fehler beim Laden');
       return;
     }
 
-    // Tabelle leeren
+    // Sortierung: ID 1 nach oben
+    data.users.sort((a, b) => a.id - b.id);
+
     const tbody = usersTable.querySelector("tbody");
     tbody.innerHTML = '';
+    const allRows = [];
 
-    // Daten einfügen
     data.users.forEach(user => {
         const row = document.createElement('tr');
-
-        tablewrapper.style.display = 'block'; // Tabelle sichtbar machen
-
+        const formatted_last_seen = new Date(user.last_seen).toLocaleString('de-DE');
         row.innerHTML = `
             <td>${user.id}</td>
             <td>${user.username}</td>
             <td>${user.email}</td>
             <td>
-                <span class="password">********</span>
-                <button class="toggle-password" data-hash="${user.password}">Show</button>
-            </td>
-            <td>
-              <select class="role-select" data-id="${user.id}">
+              <select class="role-select" id="role-${user.id}" name="role-${user.id}">
                 <option value="user" ${user.role === "user" ? "selected" : ""}>User</option>
                 <option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option>
               </select>
             </td>
-            <td><button class="delete-button" data-id="${user.id}">Löschen</button></td>
+            <td><button class="delete-button">Löschen</button></td>
+            <td>${formatted_last_seen}</td>
         `;
 
-        // Delete-Button Listener
-        row.querySelector(".delete-button").addEventListener('click', () => deleteUser(user.id));
-
-        // Toggle-Password Listener
-        const btn = row.querySelector(".toggle-password");
+        row.querySelector(".delete-button").onclick = () => deleteUser(user.id);
+        
         const roleSelect = row.querySelector(".role-select");
+        roleSelect.onchange = () => updateRole(user.id, roleSelect.value, user.username);
 
-        roleSelect.addEventListener("change", async () => {
-          const newRole = roleSelect.value;
-
-          // Extra Bestätigung für Admin
-          if (newRole === "admin") {
-            const confirmed = confirm(
-              `Willst du ${user.username} wirklich Adminrechte geben?`
-            );
-
-            if (!confirmed) {
-              roleSelect.value = user.role;
-              return;
-            }
-          }
-
-          await updateRole(user.id, newRole);
-        });
-
-        btn.addEventListener('click', () => {
-          const span = btn.parentElement.querySelector("span");
-          const hash = btn.dataset.hash;
-
-          if (btn.textContent === 'Show') {
-            if (hash.length <= 6) {
-              // zu kurz, alles anzeigen
-              span.textContent = hash;
-            } else {
-              const first = hash.slice(0, 5);       // erste 5 Zeichen
-              const last = hash.slice(-5);          // letzte 5 Zeichen
-              span.textContent = `${first}...${last}`; // nur EIN "..." dazwischen
-            }
-            btn.textContent = 'Hide';
-          } else {
-            span.textContent = '********';
-            btn.textContent = 'Show';
-          }
-        });
-
-        tbody.appendChild(row);
+        allRows.push(row);
     });
+
+    const totalPages = Math.ceil(allRows.length / rowsPerPage);
+    if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+
+    const start = (currentPage - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    allRows.slice(start, end).forEach(row => tbody.appendChild(row));
+
+    renderPagination(totalPages);
+    tablewrapper.style.display = 'block';
 
   } catch (err) {
     console.error(err);
     showMessage('Netzwerkfehler');
   }
 }
+
+// --- HIER SIND DIE FEHLENDEN FUNKTIONEN ---
 
 async function deleteUser(id) {
   const confirmed = confirm(`User ${id} wirklich löschen?`);
   if (!confirmed) return;
 
   try {
-    const res = await fetch(`/admin/del_user/${id}`, {
-      method: 'DELETE',
-      credentials: 'include'
-    });
-
+    const res = await fetch(`/admin/del_user/${id}`, { method: 'DELETE', credentials: 'include' });
     const data = await res.json();
 
     if (data.success) {
       showMessage('User gelöscht', 'green');
-      loadUsers(); // Tabelle neu laden
+      loadUsers();
     } else {
       showMessage(data.message || 'Fehler beim Löschen');
     }
   } catch (err) {
-    console.error(err);
+    showMessage('Netzwerkfehler');
+  }
+}
+
+async function updateRole(userId, role, username) {
+  if (role === "admin") {
+    const confirmed = confirm(`Willst du ${username} wirklich Adminrechte geben?`);
+    if (!confirmed) {
+      loadUsers(); // Setzt das Dropdown zurück
+      return;
+    }
+  }
+
+  try {
+    const res = await fetch('/admin/change_role', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId, role })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showMessage('Rolle aktualisiert', 'green');
+    } else {
+      showMessage(data.message || 'Fehler beim Aktualisieren');
+      loadUsers();
+    }
+  } catch (err) {
     showMessage('Netzwerkfehler');
   }
 }
 
 async function createUser(username, email, password, role) {
-  // Validierung nur wenn der Switch NICHT aktiv ist
   if (!ignoreSwitch.checked) {
-
-    if (!username || !email || !password || !role) {
-      showMessage('Bitte alle Felder ausfüllen!');
-      return;
-    }
-
-    if (username.length < 3 || username.length > 20) {
-      showMessage('Der Benutzername muss zwischen 3 und 20 Zeichen lang sein!');
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showMessage('Bitte geben Sie eine gültige E-Mail-Adresse ein!');
-      return;
-    }
-
-    // Optional wieder aktivieren
-    if (password.length < 6) {
-      showMessage('Das Passwort muss mindestens 6 Zeichen lang sein!');
-      return;
-    }
+    if (!username || !email || !password || !role) return showMessage('Bitte alle Felder ausfüllen!');
+    if (username.length < 3 || username.length > 20) return showMessage('Username: 3-20 Zeichen!');
   }
 
-  // 👉 Fetch nur EINMAL
   try {
     const res = await fetch('/admin/create_user', {
       method: 'POST',
@@ -208,7 +223,6 @@ async function createUser(username, email, password, role) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, email, password, role })
     });
-
     const data = await res.json();
 
     if (data.success) {
@@ -217,56 +231,23 @@ async function createUser(username, email, password, role) {
     } else {
       showMessage(data.message || 'Fehler beim Erstellen');
     }
-
   } catch (err) {
-    console.error(err);
     showMessage('Netzwerkfehler');
   }
 }
 
-async function updateRole(userId, role) {
-  try {
-    const res = await fetch('/admin/change_role', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId,
-        role
-      })
-    });
+// Event Listener binden
+createUserButton.onclick = () => createUser(
+  document.getElementById('newUsername').value,
+  document.getElementById('newEmail').value,
+  document.getElementById('newPassword').value,
+  document.getElementById('newRole').value
+);
 
-    const data = await res.json();
+ignoreSwitch.onchange = () => {
+  localStorage.setItem('ignoreEmptyFields', ignoreSwitch.checked);
+  showMessage(ignoreSwitch.checked ? 'Leere Felder werden ignoriert' : 'Leere Felder werden geprüft', 'green');
+};
 
-    if (data.status === 400) {
-      loadUsers();
-    }
-
-    if (data.success) {
-      showMessage('Rolle aktualisiert', 'green');
-    } else {
-      showMessage(data.message || 'Fehler beim Aktualisieren');
-    }
-
-  } catch (err) {
-    console.error(err);
-    showMessage('Netzwerkfehler');
-  }
-}
-
-
-function startLoginCheck() {
-  loadUsers()
-  // Alle 1000ms (1 Sekunde) prüfen
-  setInterval(async () => {
-    try {
-      await loadUsers();
-    } catch (err) {
-      console.error('Fehler beim Prüfen des Logins:', err);
-    }
-  }, 1000);
-}
-
+// Initialer Start
 loadUsers();

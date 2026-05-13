@@ -59,12 +59,27 @@
     <h1>Griptrainer Kalibrierungs App</h1>
 
     <div class="main-box" style="height: 2000px;">
-        <div id="message">Ladet...</div>
+
+        <div id="gripper-overview" class="gripper-overview" style="display: none;">
+            <div id="gripper-list" class="gripper-list">
+                <button id="add-gripper-card" class="gripper-card add-gripper-card" type="button" aria-label="Gripper hinzufuegen">
+                    <span class="plus-icon">+</span>
+                </button>
+            </div>
+        </div>
         
         <!-- Kalibrierungsschritte -->
         <div id="calibration-area" style="display: none; padding: 20px; text-align: center;">
+            <button id="back-from-calibration" class="back-btn" type="button">Zurück</button>
+
             <div id="step-1">
                 <p>Schritt 1: Stell den Gripper auf das Minimum (5kg) ein.</p>
+
+                <label class="setup-name-label">
+                    <p class="setup-name">Name</p>
+                    <input id="new-gripper-name-input" type="text" maxlength="32" autocomplete="off">
+                </label>
+
                 <button class="action-btn" onclick="goToStep(2)">Weiter</button>
             </div>
             
@@ -77,17 +92,69 @@
                     <button class="counter-btn" onclick="changeTurns(1)">+</button>
                 </div>
 
-                <button class="action-btn save-btn" onclick="finishCalibration()">Kalibrierung speichern</button>
+                <div class="calibration-actions">
+                    <button class="back-btn step-back-btn" type="button" onclick="goToStep(1)">Zurück</button>
+                    <button class="action-btn save-btn" onclick="finishCalibration()">Kalibrierung speichern</button>
+                </div>
             </div>
+
+            <div id="message">Ladet...</div>
         </div>
 
         <!-- Training-Anzeige (wenn kalibriert) -->
         <div id="training-area" style="display: none; padding: 20px; text-align: center;">
+            <div class="detail-actions">
+                <button id="back-to-overview" class="back-btn" type="button">Zurück</button>
+                <button id="open-gripper-settings" class="settings-btn" type="button">Einstellungen</button>
+            </div>
+
             <h2>Aktueller Widerstand</h2>
             <div id="weight-display" style="font-size: 3rem; margin: 20px 0;">-- kg</div>
             <p>Stell deine aktuelle Umdrehung ein:</p>
-            <input type="range" id="turnSlider" min="0" value="0" step="0.1" style="width: 80%;">
+            <input type="range" id="turnSlider" min="0" value="0" step="0.1">
             <div id="current-turn-label">0 Umdrehungen</div>
+        </div>
+
+        <div id="settings-area" style="display: none; padding: 20px;">
+            <button id="back-from-settings" class="back-btn" type="button">Zurück</button>
+
+            <h2>Gripper Einstellungen</h2>
+
+            <form id="gripper-settings-form" class="settings-form">
+                <label>
+                    Name
+                    <input id="gripper-name-input" type="text" maxlength="32" autocomplete="off">
+                </label>
+
+                <label>
+                    Minimum kg
+                    <input id="gripper-min-input" type="number" min="0" max="300" step="0.5">
+                </label>
+
+                <label>
+                    Maximum kg
+                    <input id="gripper-max-input" type="number" min="0" max="300" step="0.5">
+                </label>
+
+                <label>
+                    Umdrehungen
+                    <input id="gripper-turns-input" type="number" min="0.1" max="100" step="0.1">
+                </label>
+
+                <button class="action-btn save-btn" type="submit">Speichern</button>
+                <button id="delete-gripper-btn" class="delete-btn" type="button">Gripper löschen</button>
+            </form>
+        </div>
+
+        <div id="confirm-modal" class="confirm-modal" style="display: none;">
+            <div class="confirm-dialog">
+                <h3>Gripper löschen?</h3>
+                <p id="confirm-text"></p>
+                <div class="confirm-actions">
+                    <button id="confirm-cancel" class="back-btn" type="button">Abbrechen</button>
+                    <button id="confirm-delete" class="delete-btn" type="button">Löschen</button>
+                </div>
+            </div>
         </div>
     </div>
 

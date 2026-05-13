@@ -20,13 +20,13 @@
 <body>
     <header class="header">
     <div class="header-inner">
-      <img src="../../../img/FabsTracker_Logo.ico" alt="Logo" class="logo">
+      <img src="../../../img/FabsTracker_Logo.ico" draggable="false" alt="Logo" class="logo">
 
       <h3 id="h3username">username</h3>
 
       <div class="profile-wrapper">
         <div class="profile-icon" id="profileBtn">
-          <img src="../../../img/standart_user.png" alt="profile">
+          <img src="../../../img/standart_user.png" draggable="false" alt="profile">
         </div>
 
         <div class="dropdown" id="profileDropdown">
@@ -53,13 +53,48 @@
     <button data-tab="trainingsplan" class="active">📄&nbsp<span>Trainingsplan</span></button>
     <button data-tab="contracts" disabled>📄&nbsp<span>Fortschritte</span></button>
     <span class="label">Mehr</span>
-    <button data-tab="griptrainer" disabled>💪&nbsp<span>Griptrainer</span></button>
+    <button data-tab="griptrainer">💪&nbsp<span>Griptrainer</span></button>
   </nav>
 
-  <div class="trainingsplan-box" style="height: 2000px;">
+  <div class="trainingsplan-box">
     <h1>Trainingsplan</h1>
-    <h2 style="margin-top: 50px;">Kommt Bald...</h2>
     <div id="message"></div>
+
+    <div id="plan-overview" class="plan-overview" style="display: none;">
+      <div id="day-list" class="day-list">
+        <button id="add-day-card" class="day-card add-day-card" type="button" aria-label="Trainingstag hinzufügen">
+          <span class="plus-icon">+</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="day-editor" class="day-editor" style="display: none;">
+      <div class="editor-actions">
+        <button id="back-to-overview" class="back-btn" type="button">Zurück</button>
+        <button id="delete-day-btn" class="delete-btn" type="button">Tag löschen</button>
+      </div>
+
+      <label class="field">
+        Name
+        <input id="day-name-input" type="text" maxlength="32" autocomplete="off">
+      </label>
+
+      <div id="exercise-list" class="exercise-list"></div>
+
+      <button id="add-exercise-btn" class="action-btn" type="button">Übung hinzufügen</button>
+      <button id="save-day-btn" class="action-btn save-btn" type="button">Speichern</button>
+    </div>
+
+    <div id="confirm-modal" class="confirm-modal" style="display: none;">
+      <div class="confirm-dialog">
+        <h3>Trainingstag löschen?</h3>
+        <p id="confirm-text"></p>
+        <div class="confirm-actions">
+          <button id="confirm-cancel" class="back-btn" type="button">Abbrechen</button>
+          <button id="confirm-delete" class="delete-btn" type="button">Löschen</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <nav class="bottom-nav">

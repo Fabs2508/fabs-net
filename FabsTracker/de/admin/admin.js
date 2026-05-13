@@ -14,10 +14,25 @@ function showMessage(text, color = 'red') {
 function addLink(text, href) {
   const link = document.createElement('a');
   link.href = href;
-  link.textContent = text;
+
+  const textNode = document.createTextNode(text);
+  link.appendChild(textNode);
+
+  if (href === 'phpmyadmin') {
+    const img = document.createElement('img');
+    img.src = '../../img/phpmyadmin_logo.png'; 
+    
+    img.style.width = '165px';
+    img.style.height = '28px';
+    
+    img.style.marginLeft = '8px'; 
+    img.style.verticalAlign = 'middle';
+
+    link.appendChild(img);
+  }
+
   actionsDiv.appendChild(link);
 }
-
 
 async function loadUsers() {
 
@@ -49,6 +64,7 @@ async function loadUsers() {
         if (!linksSet) {
             addLink('User bearbeiten', 'edit_user.html');
             addLink('Status', 'status.html');
+            addLink('', 'phpmyadmin')
 
             window.createAdminButtonSidebar();
             window.createAdminButtonBottomNav();

@@ -56,10 +56,12 @@ router.post("/", loginLimiter, (req, res) => {
           });
         }
 
+        const date = Date.now();
+
         // last_login updaten (OHNE Response!)
         db.query(
-          "UPDATE users SET last_login = NOW() WHERE id = ?",
-          [user.id],
+          "UPDATE users SET last_login = ? WHERE id = ?",
+          [date, user.id],
           (updateErr) => {
             if (updateErr) {
               console.error("Fehler beim Update:", updateErr);

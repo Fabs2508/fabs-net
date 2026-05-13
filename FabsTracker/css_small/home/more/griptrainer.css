@@ -10,6 +10,8 @@
   --text: white;
   --bg-main: rgba(255, 255, 255, 0.05);
   --rgba: rgba(255, 255, 255, 0.25);
+  --accent: #2bbcff;
+  --range-rest: rgba(255, 255, 255, 0.22);
 }
 
 [data-theme="light"] {
@@ -17,6 +19,8 @@
   --bg: #afafaf;
   --bg-main: rgba(180, 180, 180, 0.75);
   --rgba: rgba(0, 0, 0, 0.50);
+  --accent: #1478d4;
+  --range-rest: rgba(0, 0, 0, 0.18);
 }
 
 body {
@@ -80,4 +84,307 @@ h1 {
 .main-box p {
   font-weight: bold;
   font-size: large;
+}
+
+.gripper-overview {
+  padding: 18px;
+}
+
+.gripper-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.gripper-card {
+  position: relative;
+  min-height: 135px;
+  width: 100%;
+  border: 1px solid var(--rgba);
+  border-radius: 20px;
+  background: var(--bg-main);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 80, 80, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 80, 80, 0.18);
+  color: #ff9a9a;
+  font-size: 23px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.card-delete-btn::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 11px;
+  width: 12px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+}
+
+.card-delete-btn::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 7px;
+  width: 16px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 4px -4px 0 -1px currentColor;
+}
+
+.gripper-card span {
+  display: block;
+}
+
+.gripper-name {
+  font-size: 19px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.gripper-range,
+.gripper-turns {
+  font-size: 14px;
+  opacity: 0.82;
+}
+
+.add-gripper-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 145px;
+}
+
+.plus-icon {
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.back-btn,
+.settings-btn {
+  display: block;
+  margin: 0;
+  border: 1px solid var(--rgba);
+  border-radius: 14px;
+  background: var(--bg-main);
+  color: var(--text);
+  padding: 10px 14px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+#calibration-area > .back-btn,
+#settings-area > .back-btn {
+  margin-bottom: 18px;
+}
+
+.calibration-actions {
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 105px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.calibration-actions .back-btn,
+.calibration-actions .save-btn {
+  width: 100%;
+  max-width: none;
+  height: 38px;
+  margin: 0;
+}
+
+.settings-form {
+  margin-top: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.settings-form label,
+.setup-name-label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.settings-form input,
+.setup-name-label input {
+  width: 100%;
+  border: 1px solid var(--rgba);
+  border-radius: 14px;
+  background: var(--bg-main);
+  color: var(--text);
+  padding: 12px 14px;
+  font-size: 16px;
+  outline: none;
+}
+
+.settings-form input[type="number"]::-webkit-outer-spin-button,
+.settings-form input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.settings-form input[type="number"] {
+  appearance: textfield;
+}
+
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.confirm-dialog {
+  width: 100%;
+  border: 1px solid var(--rgba);
+  border-radius: 16px;
+  background: rgba(26, 26, 26, 0.94);
+  color: var(--text);
+  padding: 22px;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="light"] .confirm-dialog {
+  background: rgba(235, 235, 235, 0.96);
+}
+
+.confirm-dialog h3 {
+  margin-bottom: 12px;
+}
+
+.confirm-dialog p {
+  margin-bottom: 20px;
+}
+
+.confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.confirm-actions .back-btn,
+.confirm-actions .delete-btn {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.setup-name-label {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.delete-btn {
+  justify-self: center;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid rgba(255, 80, 80, 0.55);
+  border-radius: 15px;
+  background: rgba(255, 80, 80, 0.12);
+  color: #ff9a9a;
+  padding: 10px 20px;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+}
+
+.save-btn {
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#settings-area h2 {
+  text-align: center;
+}
+
+#turnSlider {
+  width: 100%;
+  height: 30px;
+  margin: 16px auto 10px;
+  display: block;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  --slider-progress: 0%;
+}
+
+#turnSlider::-webkit-slider-runnable-track {
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--slider-progress), var(--range-rest) var(--slider-progress), var(--range-rest) 100%);
+  border: 1px solid var(--rgba);
+}
+
+#turnSlider::-webkit-slider-thumb {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -9px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: var(--accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+#turnSlider::-moz-range-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--range-rest);
+  border: 1px solid var(--rgba);
+}
+
+#turnSlider::-moz-range-progress {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+#turnSlider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  background: var(--accent);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 420px) {
+  .gripper-list {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,16 +1,12 @@
 const loginBtn = document.querySelector('.btn');
-
-
-
-
-loginBtn.addEventListener('click', () => {
-  login();
-});
-
 const passwordInput = document.getElementById('password');
 
 let lastLoginAttempt = 0; // Speichert den Zeitpunkt des letzten Versuchs
 let Functionable = true; // Verhindert, dass die Funktion mehrfach gleichzeitig ausgeführt wird
+
+loginBtn.addEventListener('click', () => {
+  login();
+});
 
 passwordInput.addEventListener('keydown', async (event) => {
   if (event.key === 'Enter') {

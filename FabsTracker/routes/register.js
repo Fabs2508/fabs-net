@@ -11,6 +11,23 @@ router.post('/', async (req, res) => {
     const { username, email, password } = req.body;
     const turnstileToken = req.body['cf-turnstile-response'];
 
+    if(username === '' || email === '' || password === '') {
+      return res.status(501).json({
+        success: false,
+        message: 'Bitte fülle alle Felder aus!'
+      });
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return res.status(501).json({
+        success: false,
+        message: 'Bitte gib eine gültige E-Mail-Adresse ein!'
+      });
+    } else if (username.length < 3 || username.length > 20) {
+      return res.status(501).json({
+        success: false,
+        message: 'Der Benutzername muss zwischen 3 und 20 Zeichen lang sein!'
+      });
+    }
+
     // --- JSON SCHREIBEN (ANHÄNGEN) START ---
     const filePath = path.join(__dirname, 'daten.json');
     const datum = new Date().toLocaleString('de-DE');

@@ -233,8 +233,6 @@ input:checked + .slider:before {
 /* ===== TABLE DESIGN FIX ===== */
 
 .table-wrapper {
-  max-height: 500px;        /* Höhe der Tabelle begrenzen */
-  overflow-y: auto;         /* Scrollbar, wenn Inhalte zu groß */
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 16px;
@@ -313,6 +311,37 @@ td button:hover {
   background: #54cfff;
   transform: scale(1.05);
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+}
+
+.pagination button:hover {
+  background: rgba(43, 188, 255, 0.3);
+  border-color: #2bbcff;
+}
+
+.pagination button.active {
+  background: #2bbcff;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(43, 188, 255, 0.4);
+}
+
 
 
 .create-user {

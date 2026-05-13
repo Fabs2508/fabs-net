@@ -10,6 +10,49 @@
     <link rel="stylesheet" href="../../css_small/completeProfile.css" media="screen and (max-width: 900px)">
 
     <title>FabsTracker | Profil Abschließen</title>
+
+    <script>
+        let linksSet;
+        async function me() {
+            try {
+                const res = await fetch('/me', { credentials: 'include' });
+                if (!res.ok) {
+                    msg1('Server nicht erreichbar', 3000, 'red');
+                    return;
+                }
+                const data = await res.json();
+                if (data.status === 401) {
+                    msg1('Nicht Angemeldet. Weiterleitung...', 2000, 'red');
+                    window.location.replace('../');
+                    return;
+                }
+
+                if (data.user.isProfileDone1) {
+                    completeP.style.display = 'none';
+                    rowone.style.display = 'none';
+                    rowtwo.style.display = 'none';
+                    btn.style.display = 'none';
+                    msg1('Du hast dein Profil schon abgeschlossen!', 0, 'green')
+                    setTimeout(() => window.location.replace('../'), 2000);
+                    return;
+                }
+
+                if (data.success) {
+                    const user = data.user.username;
+                    const userFormatted = user.charAt(0).toUpperCase() + user.slice(1);
+                    if (!linksSet) {
+                        h2username.textContent = `Willkommen ${userFormatted}`;
+                        linksSet = true;
+                    }
+                }
+            } catch (err) {
+                console.error('Try error:', err);
+                msg1('Netzwerkfehler', 3000, 'red');
+            }
+        }
+
+        me();
+    </script>
 </head>
 <body>
 
@@ -25,25 +68,21 @@
   <div class="bg shape2"></div>
 
   <div class="complete-box">
-    <h2 id="h2username">‎ </h2>
-    <p>Schließe dein Profil ab</p>
+    <h2 id="h2username">&lrm;</h2>
+    <p class="completeP">Schließe dein Profil ab</p>
 
-    <!-- Geänderte Klassennamen -->
     <div class="row row-one">
         <div class="birth-container">
             <label for="birthDate">Geburtsdatum:</label>
             <label><span id="birthDisplay">2000-01-01</span></label>
             
             <div class="birth-inputs">
-                <!-- Slider für das Jahr -->
                 <div class="year-box">
                     <input class="slider" type="range" min="1950" max="2026" value="2000" id="birthYear">
                 </div>
 
-                <!-- Dropdowns für Monat und Tag -->
                 <div class="date-dropdowns">
                     
-                    <!-- Tag Dropdown -->
                     <div class="custom-dropdown" id="dayDropdown">
                         <div class="dropdown-selected">01</div>
                         <div class="dropdown-list">
@@ -52,7 +91,6 @@
                         <input type="hidden" id="birthDay" value="1">
                     </div>
 
-                    <!-- Monat Dropdown -->
                     <div class="custom-dropdown" id="monthDropdown">
                         <div class="dropdown-selected">Januar</div>
                         <div class="dropdown-list">

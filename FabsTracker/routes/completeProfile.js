@@ -4,63 +4,34 @@ const db = require("./db");
 
 // Registrierung
 router.post('/', async (req, res) => {
-    console.log("yay");
+    if (!req.session.userId) {
+        return res.status(401).json({
+            success: false,
+            message: 'Nicht autorisiert.'
+        });
+    }
     try {
+
         const { birthdate, gender, height, weight } = req.body;
+        const userId = req.session.userId;
+        
+        const biometricData = JSON.stringify({ birthdate, gender, height, weight });
 
-        const verifyData = await verifyResponse.json();
-
-        if (!verifyData.success) {
-        return res.status(400).json({
-            success: false,
-            message: 'Registrierung gerade nicht möglich',
-            errors: verifyData['error-codes'] || []
-        });
-        }
-
-        const [existingUsers] = await db.promise().execute(
-        "SELECT id FROM users WHERE username = ? OR email = ?",
-        [username, email]
+        await db.promise().execute(
+            `UPDATE users 
+             SET userData = JSON_SET(
+                userData, 
+                '$.biometric_data', JSON_QUERY(?, '$'), 
+                '$.profileCompleted1', true
+             ) 
+             WHERE id = ?`,
+            [biometricData, userId]
         );
 
-        if (existingUsers.length > 0) {
-        return res.status(409).json({
-            success: false,
-            message: 'Benutzername oder E-Mail existiert bereits.'
-        });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 12);
-
-        const [insertResult] = await db.promise().execute(
-        "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-        [username, email, hashedPassword]
-        );
-
-        const userId = insertResult.insertId;
-
-        const { insertInitialUserData } = require('./utils/initUser');
-        await insertInitialUserData(userId);
-
-        req.session.userId = userId;
-        req.session.email = email;
-        req.session.role = 'user';
-
-        req.session.save((err) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({
-            success: false,
-            message: 'Session konnte nicht gespeichert werden',
-            status: 500
-            });
-        }
-
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
-            message: 'Registrierung erfolgreich.',
-            status: 201
-        });
+            message: 'BM erfolgreich.',
+            status: 200
         });
 
         

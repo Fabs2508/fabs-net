@@ -6,7 +6,7 @@ const { requireLogin } = require("./middleware/requireLogin");
 
 router.post("/", requireLogin, (req, res) => {
 
-    const date = Date.now();
+  const date = Date.now();
 
   db.query(
     "UPDATE users SET last_seen = ? WHERE id = ?",
@@ -22,7 +22,6 @@ router.post("/", requireLogin, (req, res) => {
       }
 
       return res.json({
-        date: date,
         success: true
       });
     }

@@ -21,14 +21,19 @@
       try {
         const res = await fetch("/getUserData", { credentials: "include" });
         const data = await res.json();
+        const currentTheme = data.userData?.theme || "dark";
 
-        Theme = data.userData?.theme
+        Theme = currentTheme;
 
-        document.documentElement.setAttribute(
-          "data-theme",
-          data.userData?.theme || "dark"
-        );
-      } catch {
+        // 1. Theme am HTML setzen
+        document.documentElement.setAttribute("data-theme", currentTheme);
+
+        // 2. Den Switch suchen und umschalten (falls er schon geladen ist)
+        const ts = document.getElementById("themeSwitch");
+        if (ts) {
+          ts.checked = (currentTheme === "light");
+        }
+      } catch (e) {
         document.documentElement.setAttribute("data-theme", "dark");
       } finally {
         setTimeout(getUserData, 5000);
@@ -42,13 +47,13 @@
 <body>
   <header class="header">
     <div class="header-inner">
-      <img src="../../img/FabsTracker_Logo.ico" alt="Logo" draggable="false" class="logo">
+      <img src="../../img/FabsTracker_Logo.ico" draggable="false" alt="Logo" class="logo">
 
-      <h3 id="h3username">username</h3>
+      <h3 id="h3username"></h3>
 
       <div class="profile-wrapper">
         <div class="profile-icon" id="profileBtn">
-          <img src="../../img/standart_user.png" alt="profile">
+          <img src="../../img/standart_user.png" draggable="false" alt="profile">
         </div>
 
         <div class="dropdown" id="profileDropdown">
@@ -78,7 +83,7 @@
     <button data-tab="trainingsplan">📄&nbsp<span>Trainingsplan</span></button>
     <button data-tab="contracts" disabled>📄&nbsp<span>Fortschritte</span></button>
     <span class="label">Mehr</span>
-    <button data-tab="griptrainer" disabled>💪&nbsp<span>Griptrainer</span></button>
+    <button data-tab="griptrainer">💪&nbsp<span>Griptrainer</span></button>
   </nav>
 
   <div class="home-box" style="height: 2000px;">
