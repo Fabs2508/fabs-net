@@ -18,11 +18,11 @@
     <title>FabsTracker | Trainingsplan</title>
 </head>
 <body>
-    <header class="header">
+  <header class="header">
     <div class="header-inner">
       <img src="../../../img/FabsTracker_Logo.ico" draggable="false" alt="Logo" class="logo">
 
-      <h3 id="h3username">username</h3>
+      <h3 id="h3username"></h3>
 
       <div class="profile-wrapper">
         <div class="profile-icon" id="profileBtn">
@@ -56,46 +56,57 @@
     <button data-tab="griptrainer">💪&nbsp<span>Griptrainer</span></button>
   </nav>
 
-  <div class="trainingsplan-box">
-    <h1>Trainingsplan</h1>
+  <main class="trainingsplan-box">
+    <div class="plan-toolbar">
+      <button id="prev-week-btn" class="icon-btn" type="button" aria-label="Vorherige Woche">‹</button>
+      <div>
+        <h1>Trainingsplan</h1>
+        <p id="week-label"></p>
+      </div>
+      <button id="next-week-btn" class="icon-btn" type="button" aria-label="Nächste Woche">›</button>
+    </div>
+
+    <section class="planner-layout">
+      <aside class="exercise-palette" id="exercise-palette" aria-label="Trainingsarten">
+        <h2>Bausteine</h2>
+        <button class="palette-item calisthenics" draggable="true" data-type="calisthenics" data-title="Calisthenics">Calisthenics</button>
+        <button class="palette-item push" draggable="true" data-type="push" data-title="Push">Push</button>
+        <button class="palette-item pull" draggable="true" data-type="pull" data-title="Pull">Pull</button>
+        <button class="palette-item legs" draggable="true" data-type="legs" data-title="Beine">Beine</button>
+        <button class="palette-item core" draggable="true" data-type="core" data-title="Bauch">Bauch</button>
+        <button class="palette-item back" draggable="true" data-type="back" data-title="Lat/Rücken">Lat/Rücken</button>
+        <button class="palette-item chest" draggable="true" data-type="chest" data-title="Brust">Brust</button>
+        <button class="palette-item arms" draggable="true" data-type="arms" data-title="Arme">Arme</button>
+        <button class="palette-item cardio" draggable="true" data-type="cardio" data-title="Cardio">Cardio</button>
+        <button class="palette-item rest" draggable="true" data-type="rest" data-title="Restday">Restday</button>
+        <button id="custom-exercise-btn" class="palette-add-btn" type="button" aria-label="Eigenen Baustein hinzufügen">+</button>
+      </aside>
+
+      <section class="week-grid" id="week-grid" aria-label="Wochenplan"></section>
+    </section>
+
     <div id="message"></div>
 
-    <div id="plan-overview" class="plan-overview" style="display: none;">
-      <div id="day-list" class="day-list">
-        <button id="add-day-card" class="day-card add-day-card" type="button" aria-label="Trainingstag hinzufügen">
-          <span class="plus-icon">+</span>
-        </button>
-      </div>
-    </div>
+    <button id="repeat-future-btn" class="repeat-btn" type="button" style="display: none;">Für folgende Wochen übernehmen</button>
 
-    <div id="day-editor" class="day-editor" style="display: none;">
-      <div class="editor-actions">
-        <button id="back-to-overview" class="back-btn" type="button">Zurück</button>
-        <button id="delete-day-btn" class="delete-btn" type="button">Tag löschen</button>
-      </div>
-
-      <label class="field">
-        Name
-        <input id="day-name-input" type="text" maxlength="32" autocomplete="off">
-      </label>
-
-      <div id="exercise-list" class="exercise-list"></div>
-
-      <button id="add-exercise-btn" class="action-btn" type="button">Übung hinzufügen</button>
-      <button id="save-day-btn" class="action-btn save-btn" type="button">Speichern</button>
-    </div>
-
-    <div id="confirm-modal" class="confirm-modal" style="display: none;">
-      <div class="confirm-dialog">
-        <h3>Trainingstag löschen?</h3>
-        <p id="confirm-text"></p>
-        <div class="confirm-actions">
-          <button id="confirm-cancel" class="back-btn" type="button">Abbrechen</button>
-          <button id="confirm-delete" class="delete-btn" type="button">Löschen</button>
+    <div id="custom-modal" class="custom-modal" style="display: none;">
+      <div class="custom-dialog">
+        <h3>Eigener Baustein</h3>
+        <label>
+          <p id="custom-">Name</p>
+          <input id="custom-name-input" type="text" maxlength="32" autocomplete="off">
+        </label>
+        <label>
+          <p>Farbe</p>
+          <input id="custom-color-input" type="color" value="#2bbcff">
+        </label>
+        <div class="custom-actions">
+          <button id="custom-cancel" class="icon-btn text-btn" type="button">Abbrechen</button>
+          <button id="custom-save" class="save-btn modal-save-btn" type="button">Hinzufügen</button>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
   <nav class="bottom-nav">
     <button data-tab="home">🏠<span>Home</span></button>

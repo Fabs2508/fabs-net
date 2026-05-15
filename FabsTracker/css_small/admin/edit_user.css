@@ -97,9 +97,66 @@ h1 {
   padding: 2px;
 }
 
-.role {
-  font-size: 18px;
+.role-select {
+  width: 100%;
+  padding: 8px 10px;
+  
+  min-width: 80px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  color: white;
   font-weight: 600;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  outline: none;
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* Hover */
+.role-select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Focus */
+.role-select:focus {
+  border-color: rgba(43, 188, 255, 0.8);
+  box-shadow: 0 0 0 2px rgba(43, 188, 255, 0.25);
+}
+
+/* Option Styling (browser limitiert, aber trotzdem) */
+.role-select option {
+  background: #1e1e1e;
+  color: white;
+}
+
+/* 🌞 Light Mode */
+[data-theme="light"] .role-select {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #111;
+}
+
+[data-theme="light"] .role-select:hover {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .role-select:focus {
+  border-color: rgba(43, 188, 255, 0.7);
+  box-shadow: 0 0 0 2px rgba(43, 188, 255, 0.2);
+}
+
+[data-theme="light"] .role-select option {
+  background: white;
+  color: black;
 }
 
 .delete-button {
@@ -118,7 +175,7 @@ table {
 
 th, td {
   padding: 12px 10px;
-  font-size: 13px;
+  font-size: 16px;
   text-align: left;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
@@ -154,6 +211,36 @@ td button {
   padding: 10px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+}
+
+.pagination button:hover {
+  background: rgba(43, 188, 255, 0.3);
+  border-color: #2bbcff;
+}
+
+.pagination button.active {
+  background: #2bbcff;
+  color: black;
+  font-weight: bold;
+  box-shadow: 0 0 15px rgba(43, 188, 255, 0.4);
+}
+
 .create-user input, .create-user select {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.1);
@@ -167,6 +254,7 @@ td button {
   border: none;
   cursor: pointer;
 }
+
 
 /* Switch (Checkbox) für Handy etwas größer */
 .switch {

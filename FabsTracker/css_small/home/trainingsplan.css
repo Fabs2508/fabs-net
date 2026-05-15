@@ -9,15 +9,15 @@
   --bg: black;
   --text: white;
   --bg-main: rgba(255, 255, 255, 0.05);
-  --rgba: rgba(255, 255, 255, 0.25);
+  --rgba: rgba(255, 255, 255, 0.16);
   --accent: #2bbcff;
 }
 
 [data-theme="light"] {
   --text: black;
   --bg: #afafaf;
-  --bg-main: rgba(180, 180, 180, 0.75);
-  --rgba: rgba(0, 0, 0, 0.30);
+  --bg-main: rgba(180, 180, 180, 0.62);
+  --rgba: rgba(0, 0, 0, 0.22);
   --accent: #1478d4;
 }
 
@@ -25,8 +25,7 @@ body {
   display: block;
   min-height: 100vh;
   margin: 0;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 10px;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(43, 188, 255, 0.18), transparent 30%),
@@ -41,139 +40,323 @@ body {
     linear-gradient(135deg, #9b9b9b, #9b9b9b 45%, #ffffff);
 }
 
-.sidebar {
-  display: none;
-}
-
+/* WICHTIG: Die 120px Abstand nach oben (wegen dem Desktop-Header) 
+   und die 300px Abstand nach links (wegen der Desktop-Sidebar) sind hier entfernt.
+   Dafür 80px Abstand nach unten, damit die bottom-nav nichts verdeckt. */
 .trainingsplan-box {
-  max-height: 620px;
-  overflow-y: auto;
-  margin-top: 90px;
-  margin-left: 5%;
-  margin-bottom: 90px;
-  width: 90%;
-  padding: 18px;
-  border-radius: 24px;
+  margin: 70px 0 80px 0; 
+  padding: 14px;
+  border-radius: 16px;
   border: 2px solid var(--rgba);
   background: var(--bg-main);
   backdrop-filter: blur(12px);
 }
 
-.trainingsplan-box h1 {
-  text-align: center;
-  font-size: 25px;
-}
-
-#message {
-  margin: 16px 0;
-  text-align: center;
-  font-size: 16px;
-}
-
-.day-list {
+/* Kompakterer Toolbar-Bereich für Smartphones */
+.plan-toolbar {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.day-card {
-  position: relative;
-  min-height: 135px;
-  border: 1px solid var(--rgba);
-  border-radius: 20px;
-  background: var(--bg-main);
-  color: var(--text);
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.day-name {
-  font-size: 19px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.exercise-count {
-  font-size: 14px;
-  opacity: 0.82;
-}
-
-.plus-icon {
-  font-size: 64px;
-  font-weight: 300;
-  line-height: 1;
-}
-
-.card-delete-btn,
-.remove-exercise-btn {
-  border: 1px solid rgba(255, 80, 80, 0.55);
-  background: rgba(255, 80, 80, 0.18);
-  color: #ff9a9a;
-  cursor: pointer;
-}
-
-.card-delete-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
-
-.card-delete-btn::before,
-.remove-exercise-btn::before {
-  content: "×";
-  font-size: 22px;
-  line-height: 1;
-}
-
-.editor-actions {
-  display: flex;
-  justify-content: space-between;
+  grid-template-columns: 44px 1fr 44px;
   gap: 10px;
+  align-items: center;
+  text-align: center;
   margin-bottom: 18px;
 }
 
-.back-btn,
-.delete-btn,
-.action-btn {
+.plan-toolbar h1 {
+  font-size: 22px;
+}
+
+#week-label {
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.78;
+}
+
+#message {
+  min-height: 24px;
+  margin-bottom: 14px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.icon-btn,
+.save-btn {
   border: 1px solid var(--rgba);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--bg-main);
   color: var(--text);
-  padding: 10px 14px;
   cursor: pointer;
   backdrop-filter: blur(8px);
 }
 
-.delete-btn {
-  border-color: rgba(255, 80, 80, 0.55);
-  background: rgba(255, 80, 80, 0.12);
-  color: #ff9a9a;
+.icon-btn {
+  height: 44px;
+  font-size: 26px;
+  line-height: 1;
 }
 
-.field,
-.exercise-row label {
+.icon-btn:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* ÄNDERUNG: Keine 2 Spalten mehr. Palette und Grid stehen untereinander. */
+.planner-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.exercise-palette,
+.day-column {
+  border: 1px solid var(--rgba);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+}
+
+/* ÄNDERUNG: Die Bausteine ordnen sich auf dem Handy in 2 bis 3 Spalten nebeneinander an,
+   statt den ganzen Bildschirm vertikal zu blockieren. */
+.exercise-palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+  gap: 8px;
+  padding: 12px;
+}
+
+.exercise-palette.drag-over {
+  border-color: rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.10);
+}
+
+.exercise-palette h2 {
+  grid-column: 1 / -1; /* Zwingt die Überschrift in eine eigene Zeile */
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.palette-item,
+.training-block {
+  border: 1px solid var(--rgba);
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.palette-wrap {
+  position: relative;
+}
+
+.palette-item {
+  width: 100%;
+  min-height: 40px; /* Besser für Fingereingabe */
+  cursor: grab;
+  background: var(--bg-main);
+}
+
+.palette-item.selected {
+  outline: 2px solid var(--accent);
+  background: rgba(43, 188, 255, 0.20);
+}
+
+.palette-add-btn {
+  min-height: 40px;
+  border: 1px dashed var(--rgba);
+  border-radius: 12px;
+  background: var(--bg-main);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.palette-remove-btn {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255, 80, 80, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 80, 80, 0.28);
+  color: #ffb0b0;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* ÄNDERUNG: Die Wochentage werden untereinander gestapelt */
+.week-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.day-column {
+  min-height: auto;
+  overflow: hidden;
+}
+
+.day-column.today {
+  border-color: rgba(43, 188, 255, 0.72);
+  background: rgba(43, 188, 255, 0.09);
+}
+
+.day-column.skipped {
+  opacity: 0.62;
+}
+
+.skip-btn {
+  border: 1px solid var(--rgba);
+  border-radius: 999px;
+  background: var(--bg-main);
+  color: var(--text);
+  padding: 5px 9px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.day-header {
+  min-height: auto;
+  padding: 10px;
+  border-bottom: 1px solid var(--rgba);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.day-header h2 {
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+.day-header span {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* Ein etwas kleinerer Drop-Bereich für Handys */
+.day-dropzone {
+  min-height: 80px;
+  padding: 8px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.day-dropzone.drag-over {
+  background: rgba(43, 188, 255, 0.12);
+}
+
+.drop-marker {
+  min-height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 14px rgba(43, 188, 255, 0.55);
+}
+
+.training-block {
+  min-height: 42px;
+  padding: 10px 34px 10px 10px;
+  position: relative;
+  cursor: grab;
+}
+
+/* Farbklassen */
+.training-block.calisthenics, .palette-item.calisthenics { background: rgba(248, 232, 11, 0.18); }
+.training-block.push, .palette-item.push { background: rgba(43, 188, 255, 0.18); }
+.training-block.pull, .palette-item.pull { background: rgba(108, 92, 231, 0.20); }
+.training-block.legs, .palette-item.legs { background: rgba(73, 209, 125, 0.18); }
+.training-block.core, .palette-item.core { background: rgba(255, 193, 7, 0.18); }
+.training-block.back, .palette-item.back { background: rgba(0, 188, 212, 0.18); }
+.training-block.chest, .palette-item.chest { background: rgba(255, 99, 132, 0.18); }
+.training-block.arms, .palette-item.arms { background: rgba(255, 152, 0, 0.18); }
+.training-block.cardio, .palette-item.cardio { background: rgba(233, 30, 99, 0.18); }
+.training-block.rest, .palette-item.rest { background: rgba(160, 160, 160, 0.16); }
+.training-block.custom, .palette-item.custom { background: color-mix(in srgb, var(--block-color, #2bbcff) 28%, transparent); }
+
+.training-block.dragging {
+  opacity: 0.45;
+}
+
+.remove-block-btn {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(255, 80, 80, 0.55);
+  border-radius: 50%;
+  background: rgba(255, 80, 80, 0.14);
+  color: #ff9a9a;
+  cursor: pointer;
+}
+
+.save-btn,
+.repeat-btn {
+  display: block;
+  width: 100%;
+  max-width: 100%; /* Nutzt die volle Breite auf Smartphones */
+  min-height: 44px;
+  margin: 18px auto 0;
+  background: rgba(43, 188, 255, 0.18);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.repeat-btn {
+  border: 1px solid var(--rgba);
+  border-radius: 12px;
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+/* Modals vollflächig optimieren */
+.custom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.custom-dialog {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid var(--rgba);
+  border-radius: 16px;
+  background: rgba(26, 26, 26, 0.94);
+  color: var(--text);
+  padding: 20px;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42);
+}
+
+[data-theme="light"] .custom-dialog {
+  background: rgba(235, 235, 235, 0.96);
+}
+
+.custom-dialog h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.custom-dialog label {
   display: grid;
   gap: 8px;
   font-weight: 700;
+  margin-bottom: 12px;
 }
 
-.field {
-  margin-bottom: 18px;
-}
-
-.field input,
-.exercise-row input {
+.custom-dialog input {
   width: 100%;
   border: 1px solid var(--rgba);
-  border-radius: 14px;
+  border-radius: 12px;
   background: var(--bg-main);
   color: var(--text);
   padding: 12px 14px;
@@ -181,93 +364,29 @@ body {
   outline: none;
 }
 
-.field input[type="number"]::-webkit-outer-spin-button,
-.field input[type="number"]::-webkit-inner-spin-button,
-.exercise-row input[type="number"]::-webkit-outer-spin-button,
-.exercise-row input[type="number"]::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
+.custom-dialog input[type="color"] {
+  height: 46px;
+  padding: 6px;
 }
 
-.field input[type="number"],
-.exercise-row input[type="number"] {
-  appearance: textfield;
-}
-
-.exercise-list {
-  display: grid;
-  gap: 14px;
-  margin-bottom: 16px;
-}
-
-.exercise-row {
+.custom-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  padding: 14px;
-  border: 1px solid var(--rgba);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
+  margin-top: 20px;
 }
 
-.exercise-row label:first-child {
-  grid-column: 1 / -1;
-}
-
-.remove-exercise-btn {
-  height: 42px;
-  border-radius: 14px;
-}
-
-.save-btn {
-  display: block;
+.text-btn,
+.modal-save-btn {
   width: 100%;
-  max-width: 300px;
-  margin: 14px auto 0;
-  background: rgba(43, 188, 255, 0.18);
+  max-width: none;
+  min-height: 44px;
+  margin: 0;
+  font-size: 15px;
 }
 
-.confirm-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-}
-
-.confirm-dialog {
-  width: 100%;
-  border: 1px solid var(--rgba);
-  border-radius: 16px;
-  background: rgba(26, 26, 26, 0.94);
-  color: var(--text);
-  padding: 22px;
-  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.42);
-}
-
-[data-theme="light"] .confirm-dialog {
-  background: rgba(235, 235, 235, 0.96);
-}
-
-.confirm-dialog h3 {
-  margin-bottom: 12px;
-}
-
-.confirm-dialog p {
-  margin-bottom: 20px;
-}
-
-.confirm-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-@media (max-width: 420px) {
-  .day-list {
-    grid-template-columns: 1fr;
-  }
+/* WICHTIG: Die Steuerung für die untere Leiste ist im Hauptcode,
+   daher wird sie hier sichtbar gehalten, falls header/bottom-nav CSS greift. */
+.bottom-nav {
+  display: flex;
 }

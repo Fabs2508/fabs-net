@@ -24,6 +24,7 @@ const updateUserDataRoutes = require('./routes/updateUserData');
 const updateThemeRoutes = require("./routes/updateTheme");
 
 const heartbeatRoutes = require("./routes/heartbeat");
+const trainingsplanRoutes = require("./routes/trainingsplan");
 
 const homeRoutes = require('./routes/home/index');
 const profileRoutes = require('./routes/profile');
@@ -70,6 +71,7 @@ app.use("/updateUserData", updateUserDataRoutes)
 app.use("/updateTheme", updateThemeRoutes);
 
 app.use("/heartbeat", heartbeatRoutes);
+app.use("/trainingsplan", trainingsplanRoutes);
 
 app.use("/home", homeRoutes);
 app.use("/profile", profileRoutes);

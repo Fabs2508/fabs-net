@@ -23,6 +23,17 @@ function showMessage(text, color = 'red') {
   messageDiv.style.color = color;
 }
 
+function formatToRelative(ts) {
+  const target = new Date(ts > 1e11 ? ts : ts * 1000);
+  const today = new Date('2026-05-15T13:49:45');
+  const diffDays = Math.round((new Date(target).setHours(0,0,0,0) - new Date(today).setHours(0,0,0,0)) / 864e5);
+  const rtf = new Intl.RelativeTimeFormat('de', { numeric: 'auto' });
+  const text = Math.abs(diffDays) > 7 
+    ? rtf.format(Math.round(diffDays / 365.25), 'year') 
+    : rtf.format(diffDays, 'day');
+  return text.charAt(0).toUpperCase() + text.slice(1) + `, ${target.toTimeString().slice(0, 8)}`;
+}
+
 let loginInterval;
 
 async function checkLogin() {
@@ -120,7 +131,7 @@ async function loadUsers() {
 
     data.users.forEach(user => {
         const row = document.createElement('tr');
-        const formatted_last_seen = new Date(user.last_seen).toLocaleString('de-DE');
+        const formatted_last_seen = formatToRelative(user.last_seen);
         row.innerHTML = `
             <td>${user.id}</td>
             <td>${user.username}</td>
@@ -182,6 +193,11 @@ async function deleteUser(id) {
 }
 
 async function updateRole(userId, role, username) {
+  if (role === "user" && userId === 1) {
+    showMessage('Adminrechte von User 1 können nicht entzogen werden!');
+    loadUsers(); // Setzt das Dropdown zurück
+    return;
+  }
   if (role === "admin") {
     const confirmed = confirm(`Willst du ${username} wirklich Adminrechte geben?`);
     if (!confirmed) {

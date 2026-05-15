@@ -19,6 +19,11 @@ function addLink(text, href) {
   link.appendChild(textNode);
 
   if (href === 'phpmyadmin') {
+
+    link.target = '_blank';
+    // Schützt vor Sicherheitslücken (Tab-Napping)
+    link.rel = 'noopener noreferrer';
+
     const img = document.createElement('img');
     img.src = '../../img/phpmyadmin_logo.png'; 
     

@@ -45,8 +45,8 @@ FabsTracker Codes:
 
 
 MySQL:
-    Backup Speichern: mysqldump -u root -p gymapp > backup/MySQL/backup.sql
-    Backup Wiederherstellen: mysql -u root -p gymapp < backup/MySQL/backup.sql
+    Backup Speichern: mysqldump -u root -p fabsnet > backup/MySQL/backup.sql
+    Backup Wiederherstellen: mysql -u root -p fabsnet < backup/MySQL/backup.sql
 
 NOCH MACHEN:
     Theme ändern über account img oben rechts
